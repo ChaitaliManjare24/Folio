@@ -1,6 +1,8 @@
 import Script from "next/script";
 import { fetchSettings } from "@/lib/config";
 import PortfolioClient from "./PortfolioClient";
+import LandingHeader from "@/components/landing/LandingHeader";
+import LandingFooter from "@/components/landing/LandingFooter";
 import "../landing.css";
 import "./portfolio.css";
 
@@ -39,39 +41,7 @@ export default async function PortfolioPage() {
       <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
       <Script src="/landing-assets/script.js" strategy="afterInteractive" />
 
-      <div className="blueprint" aria-hidden="true" />
-      <div className="scroll-progress" aria-hidden="true"><i></i></div>
-
-      <header className="site-header" id="header">
-        <div className="wrap header-inner">
-          <a href="/" className="logo" aria-label="Home">
-            <svg viewBox="0 0 32 32" className="logo-mark" aria-hidden="true"><path d="M4 28 L16 4 L28 28" /><path d="M9 28 L16 14 L23 28" /><circle cx="16" cy="28" r="2" className="logo-dot" /></svg>
-            <span className="logo-text">{brandA}<span>/{brandB || "build"}</span></span>
-          </a>
-          <nav className="nav" aria-label="Primary">
-            <a href="/#principles">{nav.principles || "Principles"}</a>
-            <a href="/#process">{nav.process || "Process"}</a>
-            <a href="/#stack">{nav.stack || "Stack"}</a>
-            <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
-            <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
-            <a href="/#faq">{nav.faq || "FAQ"}</a>
-          </nav>
-          <div className="header-cta">
-            <a href="/#top" className="status-pill"><i></i> {lc.statusPill || "Building"}</a>
-            <a href="/contact" className="btn btn-dark"><span>{nav.contact || "Contact"}</span>{arrow}</a>
-            <button className="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
-          </div>
-        </div>
-        <div className="mobile-nav" id="mobileNav" aria-hidden="true">
-          <a href="/#principles">{nav.principles || "Principles"}</a>
-          <a href="/#process">{nav.process || "Process"}</a>
-          <a href="/#stack">{nav.stack || "Stack"}</a>
-          <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
-          <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
-          <a href="/#faq">{nav.faq || "FAQ"}</a>
-          <a href="/contact" className="btn btn-dark">{nav.contact || "Contact"}</a>
-        </div>
-      </header>
+      <LandingHeader settings={settings} />
 
       <main id="top">
         <section style={{ paddingTop: "120px", paddingBottom: "20px" }}>
@@ -86,30 +56,7 @@ export default async function PortfolioPage() {
         </section>
       </main>
 
-      <footer className="site-footer">
-        <div className="wrap footer-grid">
-          <div className="footer-brand">
-            <a href="/" className="logo">
-              <svg viewBox="0 0 32 32" className="logo-mark" aria-hidden="true"><path d="M4 28 L16 4 L28 28" /><path d="M9 28 L16 14 L23 28" /><circle cx="16" cy="28" r="2" className="logo-dot" /></svg>
-              <span className="logo-text">{brandA}<span>/{brandB || "build"}</span></span>
-            </a>
-            <p>{footer.tagline || ""}</p>
-            <p className="footer-loc">{footer.location || ""}</p>
-          </div>
-          <nav className="footer-col"><h4>{footer.exploreTitle || "explore"}</h4>
-            <a href="/#principles">{nav.principles || "Principles"}</a><a href="/#process">{nav.process || "Process"}</a>
-            <a href="/#stack">{nav.stack || "Stack"}</a><a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
-            <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
-          </nav>
-          <nav className="footer-col"><h4>{footer.connectTitle || "connect"}</h4>
-            {(footer.connect || []).map((l: Any, i: number) => <a key={i} href={l.href}>{l.label}</a>)}
-          </nav>
-        </div>
-        <div className="wrap footer-base">
-          <span>© {new Date().getFullYear()} {footer.copyright || ""}</span>
-          <span>commit: <code>{footer.commit || ""}</code></span>
-        </div>
-      </footer>
+      <LandingFooter settings={settings} />
     </>
   );
 }
