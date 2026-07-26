@@ -16,6 +16,7 @@ import { postTools, handlePostTool } from "./tools/posts.js";
 import { categoryTools, handleCategoryTool } from "./tools/categories.js";
 import { tagTools, handleTagTool } from "./tools/tags.js";
 import { projectTools, handleProjectTool } from "./tools/projects.js";
+import { openSourceTools, handleOpenSourceTool } from "./tools/opensource.js";
 import { mediaTools, handleMediaTool } from "./tools/media.js";
 import { settingsTools, handleSettingsTool } from "./tools/settings.js";
 import { experienceTools, handleExperienceTool } from "./tools/experience.js";
@@ -33,6 +34,7 @@ const allTools = [
   ...categoryTools,
   ...tagTools,
   ...projectTools,
+  ...openSourceTools,
   ...mediaTools,
   ...settingsTools,
   ...experienceTools,
@@ -70,6 +72,7 @@ function createMcpServer() {
     if (categoryTools.some((t) => t.name === name)) return handleCategoryTool(name, a);
     if (tagTools.some((t) => t.name === name)) return handleTagTool(name, a);
     if (projectTools.some((t) => t.name === name)) return handleProjectTool(name, a);
+    if (openSourceTools.some((t) => t.name === name)) return handleOpenSourceTool(name, a);
     if (mediaTools.some((t) => t.name === name)) return handleMediaTool(name, a);
     if (settingsTools.some((t) => t.name === name)) return handleSettingsTool(name, a);
     if (experienceTools.some((t) => t.name === name)) return handleExperienceTool(name, a);
@@ -833,8 +836,8 @@ async function runTests() {
   });
 
   // Tool count check
-  await test("all 68 tools, 6 resources, 6 prompts registered", async () => {
-    assert(allTools.length === 68, `Expected 68 tools, got ${allTools.length}`);
+  await test("all 73 tools, 6 resources, 6 prompts registered", async () => {
+    assert(allTools.length === 73, `Expected 73 tools, got ${allTools.length}`);
     assert(resourceDefs.length === 6, `Expected 6 resources`);
     assert(promptDefs.length === 6, `Expected 6 prompts`);
   });

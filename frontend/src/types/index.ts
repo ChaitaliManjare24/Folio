@@ -48,6 +48,28 @@ export interface Project {
   order?: number;
 }
 
+export interface OpenSourceProject {
+  id: string;
+  title: string;
+  slug: string;
+  tagline: string;
+  description: string;
+  githubUrl: string;
+  homepageUrl?: string | null;
+  author: string;
+  language?: string | null;
+  category?: string | null;
+  topics: string[];
+  stars: number;
+  forks: number;
+  license?: string | null;
+  thumbnail?: string | null;
+  featured: boolean;
+  order?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface SkillGroup {
   category: string;
   skills: {

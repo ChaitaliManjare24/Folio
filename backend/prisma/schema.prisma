@@ -91,6 +91,30 @@ model Project {
   @@map("projects")
 }
 
+model OpenSourceProject {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  tagline     String
+  description String
+  githubUrl   String
+  homepageUrl String?
+  author      String
+  language    String?
+  category    String?
+  topics      String[]
+  stars       Int      @default(0)
+  forks       Int      @default(0)
+  license     String?
+  thumbnail   String?
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("opensource_projects")
+}
+
 model PageView {
   id        String   @id @default(uuid())
   path      String
