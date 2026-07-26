@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Onest, Fira_Code, Sora, Source_Sans_3, Archivo, JetBrains_Mono } from "next/font/google";
 import { fetchSettings, serverFetch, getSiteUrl } from "@/lib/config";
-import "./globals.css";
-
 interface Snippet {
   id: string;
   name: string;

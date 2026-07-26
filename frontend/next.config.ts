@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
       { protocol: "http", hostname: "localhost" },
     ],
   },
+  async redirects() {
+    return [
+      { source: "/projects", destination: "/portfolio", permanent: true },
+      { source: "/projects/:id", destination: "/portfolio", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

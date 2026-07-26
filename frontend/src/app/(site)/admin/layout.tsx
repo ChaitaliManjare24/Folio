@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import "../globals.css";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "Admin",

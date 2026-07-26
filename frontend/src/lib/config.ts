@@ -21,6 +21,8 @@ export interface PublicSettings {
   skillGroups: SkillGroup[];
   announcement: AnnouncementSettings;
   theme: ThemeName;
+  landingContent?: Record<string, unknown>;
+  portfolioItems?: Record<string, unknown>;
 }
 
 type JsonRecord = Record<string, unknown>;
@@ -61,7 +63,7 @@ export const navLinks = [
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
   { href: "/open-source", label: "Open Source" },
-  { href: "/projects", label: "Projects" },
+  { href: "/portfolio", label: "Portfolio" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
@@ -220,6 +222,8 @@ function buildSettings(data: JsonRecord): PublicSettings {
       : defaultSkillGroups,
     announcement: parseAnnouncement(data.announcement),
     theme,
+    landingContent: (data.landing_content as Record<string, unknown>) || undefined,
+    portfolioItems: (data.portfolio_items as Record<string, unknown>) || undefined,
   };
 }
 
