@@ -125,7 +125,7 @@ export default function PortfolioClient({
           <div className="wrap">
             <div className="cards">
               {appItems.map((item, i) => (
-                <article key={i} className="card reveal" style={{ "--i": i } as React.CSSProperties}>
+                <article key={i} className="card" style={{ "--i": i } as React.CSSProperties}>
                   <span className="card-num">{item.num || `A${i + 1}`}</span>
                   <h3>{item.title}</h3>
                   <p>{item.tagline}</p>
