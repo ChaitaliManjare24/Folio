@@ -54,7 +54,7 @@ main{padding-top:clamp(72px,9vw,96px)}
 .nav a{font-family:var(--mono-l);font-size:13px;font-weight:500;color:var(--ink-2);position:relative;padding-block:6px;letter-spacing:.01em}
 .nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--accent-landing);transition:width .3s var(--ease)}
 .nav a:hover::after{width:100%}
-.nav-highlight{color:var(--accent-landing) !important;font-weight:600}
+.nav-highlight{color:var(--accent-landing);font-weight:600}
 .nav a.nav-highlight{background:rgba(49,40,255,.18);padding:5px 14px;border-radius:4px;transition:background .3s var(--ease),color .3s var(--ease)}
 .nav a.nav-highlight::after{display:none}
 .nav a.nav-highlight:hover{background:var(--accent-landing);color:#fff}
