@@ -1,9 +1,15 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import type { PublicSettings } from "@/lib/config";
+import LandingInteractions from "./LandingInteractions";
 
 type Any = Record<string, any>;
 const arrow = <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>;
 
 export default function LandingHeader({ settings }: { settings: PublicSettings }) {
+  const pathname = usePathname();
+  const hideOsTab = pathname?.startsWith("/open-source");
   const c = (settings.landingContent || {}) as Any;
   const nav = c.nav || {};
   const footer = c.footer || {};
@@ -47,10 +53,14 @@ export default function LandingHeader({ settings }: { settings: PublicSettings }
         </div>
       </header>
 
-      {/* Vertical sticky Open Source tab — always visible on the right edge */}
-      <a href="/open-source" className="contact-tab" aria-label="Open Source">
-        <span>Open Source</span>
-      </a>
+      {/* Vertical sticky Open Source tab — hidden when already on /open-source */}
+      {!hideOsTab && (
+        <a href="/open-source" className="contact-tab" aria-label="Open Source">
+          <span>Open Source</span>
+        </a>
+      )}
+
+      <LandingInteractions />
     </>
   );
 }
