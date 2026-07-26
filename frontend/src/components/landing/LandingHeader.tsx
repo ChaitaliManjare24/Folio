@@ -24,10 +24,10 @@ export default function LandingHeader({ settings }: { settings: PublicSettings }
             <a href="/#principles">{nav.principles || "Principles"}</a>
             <a href="/#process">{nav.process || "Process"}</a>
             <a href="/#stack">{nav.stack || "Stack"}</a>
-            <a href="/about" className="nav-highlight">About</a>
             <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
             <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
             <a href="/#faq">{nav.faq || "FAQ"}</a>
+            <a href="/about" className="nav-highlight">About</a>
           </nav>
           <div className="header-cta">
             <a href="/#top" className="status-pill"><i></i> {c.statusPill || "Building"}</a>
@@ -39,10 +39,10 @@ export default function LandingHeader({ settings }: { settings: PublicSettings }
           <a href="/#principles">{nav.principles || "Principles"}</a>
           <a href="/#process">{nav.process || "Process"}</a>
           <a href="/#stack">{nav.stack || "Stack"}</a>
-          <a href="/about">About</a>
           <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
           <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
           <a href="/#faq">{nav.faq || "FAQ"}</a>
+          <a href="/about">About</a>
           <a href="/contact" className="btn btn-dark">{nav.contact || "Contact"}</a>
         </div>
       </header>
