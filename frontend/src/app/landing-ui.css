@@ -1,0 +1,104 @@
+/* ============================================================
+   Landing UI — header/footer/nav/button styles only.
+   Safe to load on any page. No resets, no page-section styles.
+   ============================================================ */
+
+:root {
+  --paper: #f5f3ec;
+  --paper-2: #efebdf;
+  --paper-3: #e7e2d3;
+  --ink: #131210;
+  --ink-2: #34322d;
+  --muted: #6f6c63;
+  --faint: #a6a294;
+  --accent-landing: #3128ff;
+  --accent-2: #5b8dff;
+  --green: #1f7a3a;
+  --line: rgba(19, 18, 16, 0.14);
+  --line-soft: rgba(19, 18, 16, 0.07);
+  --maxw: 1280px;
+  --pad: clamp(20px, 4vw, 52px);
+  --ease: cubic-bezier(0.6, 0.05, 0.05, 1);
+  --sans-l: "Archivo", system-ui, sans-serif;
+  --mono-l: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ---------- layout container ---------- */
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+
+/* ---------- decorative ---------- */
+.blueprint{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background-image:linear-gradient(to right,var(--line-soft) 1px,transparent 1px),linear-gradient(to bottom,var(--line-soft) 1px,transparent 1px);background-size:64px 64px}
+.scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:9001}
+.scroll-progress i{display:block;height:100%;width:0;background:var(--accent-landing);transition:width .1s linear}
+
+/* ---------- header ---------- */
+.site-header{position:fixed;top:0;left:0;width:100%;z-index:500;transition:background .4s,box-shadow .4s}
+.site-header.scrolled{background:rgba(245,243,236,.82);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:18px;transition:padding .4s}
+.site-header.scrolled .header-inner{padding-block:12px}
+
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.02em}
+.logo-mark{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linejoin:round;transition:transform .5s var(--ease)}
+.logo-mark .logo-dot{fill:var(--accent-landing);stroke:none}
+.logo:hover .logo-mark{transform:translateY(-2px)}
+.logo-text{font-size:20px}
+.logo-text span{font-family:var(--mono-l);font-weight:500;font-size:12px;color:var(--muted);letter-spacing:0}
+
+.nav{display:flex;gap:28px}
+.nav a{font-family:var(--mono-l);font-size:13px;font-weight:500;color:var(--ink-2);position:relative;padding-block:6px;letter-spacing:.01em}
+.nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--accent-landing);transition:width .3s var(--ease)}
+.nav a:hover::after{width:100%}
+.nav-highlight{color:var(--accent-landing) !important;font-weight:600}
+.nav a.nav-highlight{background:rgba(49,40,255,.18);padding:5px 14px;border-radius:4px;transition:background .3s var(--ease),color .3s var(--ease)}
+.nav a.nav-highlight::after{display:none}
+.nav a.nav-highlight:hover{background:var(--accent-landing);color:#fff}
+
+.header-cta{display:flex;align-items:center;gap:16px}
+.status-pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono-l);font-size:12px;color:var(--ink-2);padding:7px 13px;border:1px solid var(--line);border-radius:100px}
+.status-pill i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(31,122,58,.18);animation:landing-pulse 2s infinite}
+
+@keyframes landing-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:6px}
+.menu-toggle span{width:24px;height:2px;background:var(--ink);transition:.3s}
+.menu-toggle.open span:first-child{transform:translateY(7px) rotate(45deg)}
+.menu-toggle.open span:last-child{transform:translateY(-7px) rotate(-45deg)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:700;font-size:15px;padding:13px 22px;border-radius:8px;border:1px solid transparent;transition:.3s var(--ease);white-space:nowrap;cursor:pointer;font-family:var(--sans-l)}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translateX(3px)}
+.btn-dark{background:var(--ink);color:var(--paper)}
+.btn-dark:hover{background:var(--accent-landing)}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.btn-lg{padding:17px 28px;font-size:16px}
+
+/* ---------- mobile nav ---------- */
+.mobile-nav{display:none;flex-direction:column;gap:4px;padding:0 var(--pad) 26px;background:var(--paper);border-bottom:1px solid var(--line)}
+.mobile-nav a{padding:14px 0;font-family:var(--mono-l);font-size:18px;border-bottom:1px solid var(--line-soft)}
+.mobile-nav .btn{margin-top:16px}
+.mobile-nav.open{display:flex}
+
+/* ---------- footer ---------- */
+.site-footer{background:var(--ink);color:var(--paper);padding-top:clamp(60px,8vw,100px);position:relative;z-index:1}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:60px}
+.footer-brand .logo{margin-bottom:16px}
+.footer-brand .logo-mark{stroke:var(--paper)}
+.footer-brand p{color:#bdb9ad;font-size:15px;max-width:30ch}
+.footer-loc{font-family:var(--mono-l);font-size:12px;color:#8a877d;margin-top:10px}
+.footer-col h4{font-family:var(--mono-l);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#8a877d;margin-bottom:16px}
+.footer-col a{display:block;padding:5px 0;color:#e7e3d8;font-size:15px;transition:color .3s}
+.footer-col a:hover{color:var(--accent-2)}
+.status-ok{display:flex;align-items:center;gap:8px;color:#7fd49a;font-size:14px}
+.status-ok i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(31,122,58,.3)}
+.clock{font-family:var(--mono-l);font-size:22px;color:var(--paper);margin-top:14px;letter-spacing:.04em}
+.clock-loc{font-family:var(--mono-l);font-size:12px;color:#8a877d;margin-top:4px}
+.footer-base{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:28px;border-top:1px solid rgba(255,255,255,.12);color:#8a877d;font-family:var(--mono-l);font-size:12px}
+.footer-base code{color:#bdb9ad}
+@media (max-width:860px){.footer-grid{grid-template-columns:1fr 1fr;gap:34px}.footer-brand{grid-column:1/-1}}
+
+/* ---------- responsive header ---------- */
+@media (max-width:980px){.nav{display:none}}
+@media (max-width:680px){.header-cta .btn-dark,.header-cta .status-pill{display:none}.menu-toggle{display:flex}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
