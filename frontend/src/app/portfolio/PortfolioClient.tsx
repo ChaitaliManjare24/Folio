@@ -75,8 +75,7 @@ export default function PortfolioClient({
       </div>
 
       {/* WEB PANEL */}
-      {tab === "web" && (
-        <section className="services" style={{ paddingTop: "0", paddingBottom: "100px" }}>
+      <section className="services" style={{ paddingTop: "0", paddingBottom: "100px", display: tab === "web" ? "" : "none" }}>
           <div className="wrap">
             <div className="pf-grid" id="web-grid" ref={gridRef}>
               {webItems.map((item, i) => (
@@ -117,11 +116,9 @@ export default function PortfolioClient({
             )}
           </div>
         </section>
-      )}
 
       {/* APPS PANEL */}
-      {tab === "apps" && (
-        <section className="services" style={{ paddingTop: "0", paddingBottom: "100px" }}>
+      <section className="services" style={{ paddingTop: "0", paddingBottom: "100px", display: tab === "apps" ? "" : "none" }}>
           <div className="wrap">
             <div className="cards">
               {appItems.map((item, i) => (
@@ -138,7 +135,6 @@ export default function PortfolioClient({
             </div>
           </div>
         </section>
-      )}
-    </>
+      </>
   );
 }

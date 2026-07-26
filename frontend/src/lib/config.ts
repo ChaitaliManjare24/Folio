@@ -58,15 +58,6 @@ const defaultAnnouncement: AnnouncementSettings = {
   enabled: false,
 };
 
-export const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "/open-source", label: "Open Source" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/contact", label: "Contact" },
-] as const;
-
 function getEnvWithFallback(name: string, fallback: string) {
   const value = process.env[name]?.trim();
   if (value) {

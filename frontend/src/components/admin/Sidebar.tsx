@@ -11,7 +11,6 @@ const adminNavItems = [
   { href: "/admin/ai-writer", label: "AI Writer", icon: "AI" },
   { href: "/admin/categories", label: "Categories", icon: "C" },
   { href: "/admin/tags", label: "Tags", icon: "T" },
-  { href: "/admin/projects", label: "Projects", icon: "R" },
   { href: "/admin/opensource", label: "Open Source", icon: "OS" },
   { href: "/admin/landing", label: "Landing", icon: "L" },
   { href: "/admin/media", label: "Media", icon: "M" },

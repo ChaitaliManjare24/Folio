@@ -15,7 +15,6 @@ import type { StreamableHTTPServerTransport as StreamableHTTPServerTransportType
 import { postTools, handlePostTool } from "./tools/posts.js";
 import { categoryTools, handleCategoryTool } from "./tools/categories.js";
 import { tagTools, handleTagTool } from "./tools/tags.js";
-import { projectTools, handleProjectTool } from "./tools/projects.js";
 import { openSourceTools, handleOpenSourceTool } from "./tools/opensource.js";
 import { mediaTools, handleMediaTool } from "./tools/media.js";
 import { settingsTools, handleSettingsTool } from "./tools/settings.js";
@@ -33,7 +32,6 @@ const allTools = [
   ...postTools,
   ...categoryTools,
   ...tagTools,
-  ...projectTools,
   ...openSourceTools,
   ...mediaTools,
   ...settingsTools,
@@ -71,7 +69,6 @@ function createMcpServer() {
     if (postTools.some((t) => t.name === name)) return handlePostTool(name, a);
     if (categoryTools.some((t) => t.name === name)) return handleCategoryTool(name, a);
     if (tagTools.some((t) => t.name === name)) return handleTagTool(name, a);
-    if (projectTools.some((t) => t.name === name)) return handleProjectTool(name, a);
     if (openSourceTools.some((t) => t.name === name)) return handleOpenSourceTool(name, a);
     if (mediaTools.some((t) => t.name === name)) return handleMediaTool(name, a);
     if (settingsTools.some((t) => t.name === name)) return handleSettingsTool(name, a);
@@ -495,41 +492,7 @@ async function runTests() {
     const data = JSON.parse(result.content[0]?.text || "{}");
     assert(data.success, "Expected success");
   });
-
-  // Projects
-  await test("list_projects returns array", async () => {
-    const result = await handleProjectTool("list_projects", {});
-    const data = JSON.parse(result.content[0]?.text || "{}");
-    assert(Array.isArray(data.projects), "Expected projects array");
-  });
-
-  let createdProjectId: string | null = null;
-  await test("create_project", async () => {
-    const result = await handleProjectTool("create_project", {
-      title: `MCP Test Project ${Date.now()}`,
-      description: "A test project from MCP",
-      techStack: ["TypeScript", "MCP"],
-      featured: false,
-      order: 999,
-    });
-    const data = JSON.parse(result.content[0]?.text || "{}");
-    assert(data.success, "Expected success");
-    createdProjectId = data.project?.id;
-  });
-
-  await test("update_project", async () => {
-    assert(createdProjectId, "No project to update");
-    const result = await handleProjectTool("update_project", { id: createdProjectId, description: "Updated by MCP" });
-    const data = JSON.parse(result.content[0]?.text || "{}");
-    assert(data.success, "Expected success");
-  });
-
-  await test("delete_project", async () => {
-    assert(createdProjectId, "No project to delete");
-    const result = await handleProjectTool("delete_project", { id: createdProjectId, confirm: true });
-    const data = JSON.parse(result.content[0]?.text || "{}");
-    assert(data.success, "Expected success");
-  });
+;
 
   // Media
   await test("list_media returns array", async () => {
@@ -814,8 +777,7 @@ async function runTests() {
     assert(text.includes("Phase 1: Gather Information"), "Expected Phase 1");
     assert(text.includes("update_settings"), "Expected tool call instructions");
     assert(text.includes("create_experience"), "Expected experience instructions");
-    assert(text.includes("create_project"), "Expected project instructions");
-    assert(text.includes("create_category"), "Expected category instructions");
+        assert(text.includes("create_category"), "Expected category instructions");
     assert(text.includes("skill_groups"), "Expected skill_groups reference");
     assert(text.includes("NEVER create duplicate"), "Expected safety rules");
   });
@@ -832,12 +794,11 @@ async function runTests() {
     const text = prompt!.messages[0].content.text;
     assert(text.includes("add a new project"), "Expected user changes in prompt");
     assert(text.includes("NEVER overwrite"), "Expected safety rules");
-    assert(text.includes("list_projects"), "Expected current state check");
-  });
+      });
 
   // Tool count check
-  await test("all 73 tools, 6 resources, 6 prompts registered", async () => {
-    assert(allTools.length === 73, `Expected 73 tools, got ${allTools.length}`);
+  await test("all 68 tools, 6 resources, 6 prompts registered", async () => {
+    assert(allTools.length === 68, `Expected 68 tools, got ${allTools.length}`);
     assert(resourceDefs.length === 6, `Expected 6 resources`);
     assert(promptDefs.length === 6, `Expected 6 prompts`);
   });
