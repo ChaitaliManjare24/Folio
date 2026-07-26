@@ -26,6 +26,7 @@ export default function LandingHeader({ settings }: { settings: PublicSettings }
             <a href="/#stack">{nav.stack || "Stack"}</a>
             <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
             <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
+            <a href="/open-source" className="nav-highlight">Open Source</a>
             <a href="/#faq">{nav.faq || "FAQ"}</a>
             <a href="/about" className="nav-highlight">About</a>
           </nav>
@@ -41,11 +42,18 @@ export default function LandingHeader({ settings }: { settings: PublicSettings }
           <a href="/#stack">{nav.stack || "Stack"}</a>
           <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
           <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
+          <a href="/open-source" className="nav-highlight">Open Source</a>
           <a href="/#faq">{nav.faq || "FAQ"}</a>
           <a href="/about">About</a>
           <a href="/contact" className="btn btn-dark">{nav.contact || "Contact"}</a>
         </div>
       </header>
+
+      {/* Vertical sticky Contact tab — always visible on the right edge */}
+      <a href="/contact" className="contact-tab" aria-label="Contact">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        <span>Contact</span>
+      </a>
     </>
   );
 }
