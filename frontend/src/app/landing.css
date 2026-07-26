@@ -372,4 +372,3 @@ main section{position:relative;z-index:1}
 .contact-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:400;display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--paper);padding:18px 12px;border-radius:10px 0 0 10px;text-decoration:none;font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.06em;writing-mode:vertical-rl;transition:background .3s var(--ease),padding .3s var(--ease);box-shadow:-2px 0 12px rgba(19,18,16,.12)}
 .contact-tab svg{transform:rotate(90deg);width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .contact-tab:hover{background:var(--accent);padding-right:16px}
-@media (max-width:680px){.contact-tab{display:none}}

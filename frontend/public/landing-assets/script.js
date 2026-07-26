@@ -21,22 +21,27 @@
     onScroll();
   }
 
-  /* ---------- mobile menu ---------- */
-  const toggle = $('#menuToggle');
-  const mobile = $('#mobileNav');
-  if (toggle && mobile) {
-    toggle.addEventListener('click', () => {
+  /* ---------- mobile menu (event delegation — survives SPA navigation) ---------- */
+  document.addEventListener('click', (e) => {
+    const toggle = e.target.closest('#menuToggle');
+    if (toggle) {
+      const mobile = $('#mobileNav');
+      if (!mobile) return;
       const open = toggle.classList.toggle('open');
       mobile.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open);
       mobile.setAttribute('aria-hidden', !open);
-    });
-    $$('#mobileNav a').forEach(a => a.addEventListener('click', () => {
-      toggle.classList.remove('open');
-      mobile.classList.remove('open');
-      toggle.setAttribute('aria-expanded', false);
-    }));
-  }
+      return;
+    }
+    // Close menu when a mobile-nav link is clicked
+    const navLink = e.target.closest('#mobileNav a');
+    if (navLink) {
+      const toggle = $('#menuToggle');
+      const mobile = $('#mobileNav');
+      if (toggle) { toggle.classList.remove('open'); toggle.setAttribute('aria-expanded', false); }
+      if (mobile) { mobile.classList.remove('open'); mobile.setAttribute('aria-hidden', true); }
+    }
+  });
 
   /* ---------- scroll reveal ---------- */
   const reveals = $$('.reveal');
