@@ -163,6 +163,20 @@ h1, h2, h3, h4 {
 }
 
 /* --- Prose (Blog) --- */
+.tldr-box {
+  margin: 0 0 var(--space-8) 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-accent-lightest);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text);
+}
+.tldr-box p { margin: 0; }
+.tldr-box p + p { margin-top: var(--space-2); }
+.tldr-box strong { color: var(--color-accent-dark); }
+
 .prose {
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
@@ -925,4 +939,88 @@ h1, h2, h3, h4 {
 @keyframes ticker-scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   THEME: Forge Tech — applied via [data-theme="forge-tech"]
+   Matches the FORGE-style landing page at /:
+   warm paper bg, near-black ink text, electric ultramarine accent.
+   Archivo for display + body, JetBrains Mono for code/labels.
+   ============================================================ */
+
+[data-theme="forge-tech"] {
+  /* Accent — electric ultramarine from FORGE */
+  --color-accent: #3128ff;
+  --color-accent-light: #5b54ff;
+  --color-accent-lighter: #9d99ff;
+  --color-accent-lightest: #ebeaff;
+  --color-accent-dark: #1f18cc;
+  --color-accent-on: #f5f3ec;
+
+  /* Backgrounds — warm paper from FORGE */
+  --color-bg: #f5f3ec;
+  --color-bg-elevated: #fbf9f3;
+  --color-bg-subtle: #efece2;
+  --color-bg-muted: #e6e3d7;
+
+  /* Text — ink from FORGE */
+  --color-text: #131210;
+  --color-text-secondary: #4a4844;
+  --color-text-tertiary: #6f6c63;
+  --color-text-inverse: #f5f3ec;
+
+  /* Borders — warm grays */
+  --color-border: #d9d6c9;
+  --color-border-strong: #b8b5a8;
+
+  /* Semantic */
+  --color-success: #2c8a5e;
+  --color-warning: #c2680a;
+  --color-error: #c1262a;
+
+  /* Fonts — match landing page (Archivo everywhere + JetBrains Mono) */
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-archivo);
+  --font-mono: var(--font-jetbrains);
+
+  /* Layout — match landing page max width (1280px = 80rem) */
+  --max-width: 80rem;
+}
+
+[data-theme="forge-tech"] body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* Clean background — no dot pattern (landing page is solid paper) */
+[data-theme="forge-tech"] body::before {
+  background-image: none;
+}
+
+[data-theme="forge-tech"] ::selection {
+  background: rgba(49, 40, 255, 0.18);
+  color: var(--color-text);
+}
+
+/* ============================================================
+   FORGE-TECH NAV — animated underline (matches landing page)
+   ============================================================ */
+.nav-link {
+  position: relative;
+  letter-spacing: 0.01em;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-accent);
+  transition: width 0.3s cubic-bezier(0.6, 0.05, 0.05, 1);
+}
+.nav-link:hover::after,
+.nav-link[data-active="true"]::after {
+  width: 100%;
 }

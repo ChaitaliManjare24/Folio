@@ -14,6 +14,7 @@ export interface Post {
   metaTitle?: string | null;
   metaDescription?: string | null;
   ogImage?: string | null;
+  tldr?: string | null;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -127,6 +128,7 @@ export interface AiDraftOutput {
   title: string;
   slug: string;
   excerpt: string;
+  tldr: string;
   metaTitle: string;
   metaDescription: string;
   ogImagePrompt: string;

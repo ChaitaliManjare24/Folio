@@ -167,6 +167,7 @@ Quality requirements:
           title: "string",
           slug: "string",
           excerpt: "string",
+          tldr: "string",
           metaTitle: "string",
           metaDescription: "string",
           ogImagePrompt: "string",
@@ -307,6 +308,7 @@ You are generating SEO metadata for an article that has already been written. Ba
         "",
         "Based on the article content and brief, produce:",
         "- excerpt: 1-2 sentence summary for listings and social sharing",
+        "- tldr: a punchy 'key takeaways' summary (2-4 sentences, under 150 words) that gives AI search engines (Google AI Overviews, Perplexity, ChatGPT) the direct answer to the topic. Plain text, no markdown.",
         "- metaTitle: SEO title (under 60 chars)",
         "- metaDescription: meta description (under 160 chars)",
         "- tagSuggestions: 3-8 relevant tags",
@@ -319,6 +321,7 @@ You are generating SEO metadata for an article that has already been written. Ba
         "JSON schema:",
         JSON.stringify({
           excerpt: "string",
+          tldr: "string",
           metaTitle: "string",
           metaDescription: "string",
           tagSuggestions: ["string"],

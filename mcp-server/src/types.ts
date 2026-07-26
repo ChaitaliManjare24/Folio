@@ -12,6 +12,7 @@ export interface Post {
   metaTitle: string | null;
   metaDescription: string | null;
   ogImage: string | null;
+  tldr: string | null;
   previewToken: string | null;
   createdAt: string;
   updatedAt: string;

@@ -271,6 +271,7 @@ function toDraftPayload(row: any): AiDraftData | null {
     title: row.title,
     slug: row.slug,
     excerpt: row.excerpt || "",
+    tldr: row.tldr || "",
     metaTitle: row.metaTitle || "",
     metaDescription: row.metaDescription || "",
     ogImagePrompt: row.ogImagePrompt || "",
@@ -522,18 +523,27 @@ async function recordUsageEvent(
 async function recordFailedOperation(
   prismaClient: AdminAiPrisma,
   conversationId: string | null,
-  provider: string,
+  providerOrConfig: string | Pick<AiProviderConfig, "provider" | "model" | "baseUrl" | "maxTokens">,
   operation: string,
   errorMessage: string
 ) {
+  const provider = typeof providerOrConfig === "string" ? providerOrConfig : providerOrConfig.provider;
+  const model = typeof providerOrConfig === "string" ? null : providerOrConfig.model;
+  const baseUrlHost = typeof providerOrConfig === "string" ? null : getUrlHost(providerOrConfig.baseUrl);
+  const maxTokens = typeof providerOrConfig === "string" ? null : providerOrConfig.maxTokens;
   const created = await prismaClient.aiUsageEvent.create({
     data: {
       conversationId,
       operation,
       provider,
+      model,
       success: false,
       errorMessage,
-      metadataJson: JSON.stringify({ failed: true }),
+      metadataJson: JSON.stringify({
+        failed: true,
+        ...(baseUrlHost ? { baseUrlHost } : {}),
+        ...(maxTokens ? { maxTokens } : {}),
+      }),
     },
   }).catch(() => undefined);
 
@@ -543,6 +553,24 @@ async function recordFailedOperation(
       event: created,
     });
   }
+}
+
+function getUrlHost(value: string | null | undefined) {
+  if (!value) return null;
+  try {
+    return new URL(value).host;
+  } catch {
+    return null;
+  }
+}
+
+function getAiConfigLogMeta(config: Pick<AiProviderConfig, "provider" | "model" | "baseUrl" | "maxTokens"> | null | undefined) {
+  return {
+    provider: config?.provider,
+    model: config?.model || undefined,
+    baseUrlHost: getUrlHost(config?.baseUrl),
+    maxTokens: config?.maxTokens,
+  };
 }
 
 async function createUniquePostSlug(prismaClient: AdminAiPrisma, preferredSlug: string, fallbackTitle: string) {
@@ -739,6 +767,7 @@ function buildDraftPatchUpdate(patch: Partial<AiDraftData>) {
     ...(typeof patch.title === "string" ? { title: patch.title } : {}),
     ...(typeof patch.slug === "string" ? { slug: patch.slug } : {}),
     ...(typeof patch.excerpt === "string" ? { excerpt: patch.excerpt } : {}),
+    ...(typeof patch.tldr === "string" ? { tldr: patch.tldr } : {}),
     ...(typeof patch.metaTitle === "string" ? { metaTitle: patch.metaTitle } : {}),
     ...(typeof patch.metaDescription === "string" ? { metaDescription: patch.metaDescription } : {}),
     ...(typeof patch.contentHtml === "string" ? { contentHtml: sanitizeGeneratedHtml(patch.contentHtml) } : {}),
@@ -1027,9 +1056,15 @@ export function createAdminAiRouter({
     return { ...envConfig, ...dbOverrides };
   }
 
-  const getAiService = async (capture?: (event: AiTelemetryEvent) => void | Promise<void>) => {
+  const getAiServiceWithConfig = async (capture?: (event: AiTelemetryEvent) => void | Promise<void>) => {
     const config = await resolveConfig();
-    return aiService || createBlogStudioAiService({ config, onTelemetry: capture });
+    return {
+      config,
+      service: aiService || createBlogStudioAiService({ config, onTelemetry: capture }),
+    };
+  };
+  const getAiService = async (capture?: (event: AiTelemetryEvent) => void | Promise<void>) => {
+    return (await getAiServiceWithConfig(capture)).service;
   };
   const getResearchService = async (capture?: (event: ResearchTelemetryEvent) => void | Promise<void>) => {
     const config = await resolveConfig();
@@ -1041,6 +1076,7 @@ export function createAdminAiRouter({
   });
 
   const draftGenerationJobs = new Map<string, Promise<void>>();
+  const rewriteJobs = new Map<string, Promise<void>>();
   const DRAFT_STALE_MS = 30 * 60 * 1000;
   const DRAFT_ERROR_PREFIX = "__DRAFT_ERROR__";
 
@@ -1066,9 +1102,14 @@ export function createAdminAiRouter({
   async function executeDraftGeneration(conversationId: string, userId: string): Promise<void> {
     const startedAt = Date.now();
     const usageEvents: AiTelemetryEvent[] = [];
+    let generationConfig: AiProviderConfig | null = null;
 
     try {
-      const service = await getAiService((event) => { usageEvents.push(event); });
+      generationConfig = await resolveConfig();
+      const service = aiService || createBlogStudioAiService({
+        config: generationConfig,
+        onTelemetry: (event) => { usageEvents.push(event); },
+      });
       const conversation = await loadConversationForUser(prismaClient, conversationId, userId);
 
       if (!conversation) {
@@ -1115,6 +1156,7 @@ export function createAdminAiRouter({
         title: draft.title,
         slug: draft.slug,
         excerpt: draft.excerpt || null,
+        tldr: draft.tldr || null,
         metaTitle: draft.metaTitle || null,
         metaDescription: draft.metaDescription || null,
         contentHtml: sanitizeGeneratedHtml(draft.contentHtml),
@@ -1173,6 +1215,7 @@ export function createAdminAiRouter({
       logInfo("Async draft generation completed", {
         conversationId,
         elapsedMs: Date.now() - startedAt,
+        ...getAiConfigLogMeta(generationConfig),
       });
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
@@ -1198,11 +1241,95 @@ export function createAdminAiRouter({
         },
       }).catch(() => undefined);
 
-      await recordFailedOperation(prismaClient, conversationId, envConfig.provider, "draft_generate", errorMsg);
+      await recordFailedOperation(
+        prismaClient,
+        conversationId,
+        generationConfig || envConfig,
+        "draft_generate",
+        errorMsg
+      );
 
       logError("Async draft generation failed", {
         conversationId,
         elapsedMs: Date.now() - startedAt,
+        ...getAiConfigLogMeta(generationConfig || envConfig),
+        error: errorMsg,
+      });
+    }
+  }
+
+  async function executeRewrite(ctx: {
+    conversationId: string;
+    userId: string;
+    proposalId: string;
+    action: AiRewriteAction;
+    selectedText: string | null;
+  }): Promise<void> {
+    const usageEvents: AiTelemetryEvent[] = [];
+    const { config, service } = await getAiServiceWithConfig((event) => {
+      usageEvents.push(event);
+    });
+
+    try {
+      const conversation = await loadConversationForUser(prismaClient, ctx.conversationId, ctx.userId);
+      if (!conversation) return;
+      const draft = toDraftPayload(conversation.draft);
+      if (!draft || !conversation.draft?.id) return;
+
+      const brief = toBriefPayload(conversation.brief);
+      const research = prepareResearchForGeneration(toResearchPayload(conversation.research));
+      const historicalContext = await getHistoricalEngagementContext(prismaClient);
+      const writingProfile = await loadWritingProfile(prismaClient);
+
+      const proposal = await service.rewriteDraft({
+        topic: conversation.topic,
+        brief,
+        draft,
+        action: ctx.action,
+        selectedText: ctx.selectedText,
+        historicalContext: historicalContext.summary,
+        research,
+        writingProfile: isProfileEmpty(writingProfile) ? null : writingProfile,
+      });
+
+      const targetText = getProposalTargetText(draft, proposal.target);
+      await prismaClient.aiRewriteProposal.update({
+        where: { id: ctx.proposalId },
+        data: {
+          label: proposal.label,
+          summary: proposal.summary,
+          targetSection: proposal.target,
+          originalText: targetText,
+          proposedText: proposal.preview.slice(0, MAX_REWRITE_PREVIEW_LENGTH),
+          draftPatchJson: JSON.stringify(proposal.draftPatch || {}),
+          status: "proposed",
+        },
+      });
+
+      await Promise.all(
+        usageEvents.map((event) =>
+          recordUsageEvent(prismaClient, ctx.conversationId, event, {
+            action: ctx.action,
+            target: proposal.target,
+          })
+        )
+      );
+
+      logInfo("Async rewrite completed", {
+        conversationId: ctx.conversationId,
+        proposalId: ctx.proposalId,
+        action: ctx.action,
+      });
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : "Failed to generate rewrite proposal";
+      await prismaClient.aiRewriteProposal
+        .update({ where: { id: ctx.proposalId }, data: { status: "failed" } })
+        .catch(() => undefined);
+      await recordFailedOperation(prismaClient, ctx.conversationId, config, "draft_rewrite", errorMsg);
+      logError("Async rewrite failed", {
+        conversationId: ctx.conversationId,
+        proposalId: ctx.proposalId,
+        action: ctx.action,
         error: errorMsg,
       });
     }
@@ -1277,7 +1404,7 @@ export function createAdminAiRouter({
     }
 
     const usageEvents: AiTelemetryEvent[] = [];
-    const routeAiService = await getAiService((event) => {
+    const { config: routeAiConfig, service: routeAiService } = await getAiServiceWithConfig((event) => {
       usageEvents.push(event);
     });
     const researchMeta = getResearchMeta(await getResearchService());
@@ -1321,7 +1448,7 @@ export function createAdminAiRouter({
       await recordFailedOperation(
         prismaClient,
         null,
-        envConfig.provider,
+        routeAiConfig,
         "conversation_start",
         error instanceof Error ? error.message : "Failed to start AI conversation"
       );
@@ -1413,7 +1540,7 @@ export function createAdminAiRouter({
     }
 
     const usageEvents: AiTelemetryEvent[] = [];
-    const routeAiService = await getAiService((event) => {
+    const { config: routeAiConfig, service: routeAiService } = await getAiServiceWithConfig((event) => {
       usageEvents.push(event);
     });
     const researchMeta = getResearchMeta(await getResearchService());
@@ -1454,7 +1581,7 @@ export function createAdminAiRouter({
       await recordFailedOperation(
         prismaClient,
         param(req, "id"),
-        envConfig.provider,
+        routeAiConfig,
         "conversation_reply",
         error instanceof Error ? error.message : "Failed to send AI message"
       );
@@ -1474,7 +1601,7 @@ export function createAdminAiRouter({
 
   router.post("/conversations/:id/brief", aiRateLimit, async (req: AuthRequest, res) => {
     const usageEvents: AiTelemetryEvent[] = [];
-    const routeAiService = await getAiService((event) => {
+    const { config: routeAiConfig, service: routeAiService } = await getAiServiceWithConfig((event) => {
       usageEvents.push(event);
     });
     const researchMeta = getResearchMeta(await getResearchService());
@@ -1552,7 +1679,7 @@ export function createAdminAiRouter({
       await recordFailedOperation(
         prismaClient,
         param(req, "id"),
-        envConfig.provider,
+        routeAiConfig,
         "brief_generate",
         error instanceof Error ? error.message : "Failed to generate AI brief"
       );
@@ -1814,7 +1941,7 @@ export function createAdminAiRouter({
 
   router.post("/conversations/:id/draft", aiRateLimit, async (req: AuthRequest, res) => {
     const usageEvents: AiTelemetryEvent[] = [];
-    const routeAiService = await getAiService((event) => {
+    const { config: routeAiConfig, service: routeAiService } = await getAiServiceWithConfig((event) => {
       usageEvents.push(event);
     });
     const researchMeta = getResearchMeta(await getResearchService());
@@ -1935,6 +2062,7 @@ export function createAdminAiRouter({
           title: draft.title,
           slug: draft.slug,
           excerpt: draft.excerpt || null,
+          tldr: draft.tldr || null,
           metaTitle: draft.metaTitle || null,
           metaDescription: draft.metaDescription || null,
           contentHtml: sanitizeGeneratedHtml(draft.contentHtml),
@@ -1964,6 +2092,7 @@ export function createAdminAiRouter({
           title: draft.title,
           slug: draft.slug,
           excerpt: draft.excerpt || null,
+          tldr: draft.tldr || null,
           metaTitle: draft.metaTitle || null,
           metaDescription: draft.metaDescription || null,
           contentHtml: sanitizeGeneratedHtml(draft.contentHtml),
@@ -2023,7 +2152,7 @@ export function createAdminAiRouter({
       await recordFailedOperation(
         prismaClient,
         param(req, "id"),
-        envConfig.provider,
+        routeAiConfig,
         "draft_generate",
         error instanceof Error ? error.message : "Failed to generate AI draft"
       );
@@ -2133,7 +2262,7 @@ export function createAdminAiRouter({
 
   router.post("/conversations/:id/analyze", aiRateLimit, async (req: AuthRequest, res) => {
     const usageEvents: AiTelemetryEvent[] = [];
-    const routeAiService = await getAiService((event) => {
+    const { config: routeAiConfig, service: routeAiService } = await getAiServiceWithConfig((event) => {
       usageEvents.push(event);
     });
     const researchMeta = getResearchMeta(await getResearchService());
@@ -2223,7 +2352,7 @@ export function createAdminAiRouter({
       await recordFailedOperation(
         prismaClient,
         param(req, "id"),
-        envConfig.provider,
+        routeAiConfig,
         "draft_analyze",
         error instanceof Error ? error.message : "Failed to analyze AI draft"
       );
@@ -2350,16 +2479,6 @@ export function createAdminAiRouter({
       return;
     }
 
-    const usageEvents: AiTelemetryEvent[] = [];
-    const routeAiService = await getAiService((event) => {
-      usageEvents.push(event);
-    });
-
-    if (!routeAiService.isAvailable()) {
-      aiUnavailableResponse(res, routeAiService);
-      return;
-    }
-
     try {
       const conversation = await loadConversationForUser(prismaClient, param(req, "id"), req.userId!);
       if (!conversation) {
@@ -2373,64 +2492,49 @@ export function createAdminAiRouter({
         return;
       }
 
-      const brief = toBriefPayload(conversation.brief);
-      const research = prepareResearchForGeneration(toResearchPayload(conversation.research));
-      const historicalContext = await getHistoricalEngagementContext(prismaClient);
-      const writingProfile = await loadWritingProfile(prismaClient);
-      const proposal = await routeAiService.rewriteDraft({
-        topic: conversation.topic,
-        brief,
-        draft,
-        action,
-        selectedText: coerceString(req.body?.selectedText, 5000) || null,
-        historicalContext: historicalContext.summary,
-        research,
-        writingProfile: isProfileEmpty(writingProfile) ? null : writingProfile,
-      });
-
-      const targetText = getProposalTargetText(draft, proposal.target);
-      const created = await prismaClient.aiRewriteProposal.create({
+      const placeholder = await prismaClient.aiRewriteProposal.create({
         data: {
           conversationId: conversation.id,
           draftOutputId: conversation.draft.id,
           action,
-          label: proposal.label,
-          summary: proposal.summary,
-          targetSection: proposal.target,
-          originalText: targetText,
-          proposedText: proposal.preview.slice(0, MAX_REWRITE_PREVIEW_LENGTH),
-          draftPatchJson: JSON.stringify(proposal.draftPatch || {}),
-          status: "proposed",
+          label: action,
+          summary: null,
+          targetSection: "",
+          originalText: "",
+          proposedText: "",
+          draftPatchJson: "{}",
+          status: "rewriting",
         },
       });
-      await Promise.all(
-        usageEvents.map((event) =>
-          recordUsageEvent(prismaClient, conversation.id, event, {
-            action,
-            target: proposal.target,
-          })
-        )
-      );
 
-      res.json({
-        proposal: toRewriteProposalPayload(created),
+      const selectedText = coerceString(req.body?.selectedText, 5000) || null;
+
+      const job = executeRewrite({
+        conversationId: conversation.id,
+        userId: req.userId!,
+        proposalId: placeholder.id,
+        action,
+        selectedText,
+      });
+      rewriteJobs.set(placeholder.id, job.finally(() => rewriteJobs.delete(placeholder.id)));
+
+      logInfo("Async rewrite started", { conversationId: conversation.id, proposalId: placeholder.id, action });
+      res.status(202).json({
+        status: "rewriting",
+        proposalId: placeholder.id,
+        conversationId: conversation.id,
+        pollUrl: `/api/admin/ai/conversations/${conversation.id}`,
+        message: "Rewrite started in background. Poll get_ai_conversation until this proposal's status becomes 'proposed' or 'failed'.",
       });
     } catch (error) {
-      await recordFailedOperation(
-        prismaClient,
-        param(req, "id"),
-        envConfig.provider,
-        "draft_rewrite",
-        error instanceof Error ? error.message : "Failed to generate rewrite proposal"
-      );
-      logError("AI rewrite failed", {
+      logError("AI rewrite start failed", {
         ...getRequestLogMeta(req),
         userId: req.userId,
         conversationId: param(req, "id"),
         action,
         error: error instanceof Error ? error.message : String(error),
       });
-      res.status(502).json({ error: error instanceof Error ? error.message : "Failed to generate rewrite proposal" });
+      res.status(500).json({ error: "Failed to start rewrite proposal" });
     }
   });
 
@@ -2601,6 +2705,7 @@ export function createAdminAiRouter({
             title: draft.title,
             excerpt: excerpt || null,
             body: contentHtml,
+            tldr: draft.tldr || null,
             readingTime: computeReadingTime(contentHtml),
             metaTitle: draft.metaTitle || null,
             metaDescription: draft.metaDescription || null,
@@ -2653,6 +2758,7 @@ export function createAdminAiRouter({
           slug: uniqueSlug,
           excerpt: excerpt || null,
           body: contentHtml,
+          tldr: draft.tldr || null,
           categoryId,
           featuredImage: null,
           status: "DRAFT",

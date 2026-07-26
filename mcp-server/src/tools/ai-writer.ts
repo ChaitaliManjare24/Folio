@@ -154,7 +154,7 @@ export const aiWriterTools: Tool[] = [
   },
   {
     name: "request_rewrite",
-    description: "Request an AI rewrite proposal for a specific section of the draft. Returns a proposal with a preview of the rewritten content. Use apply_rewrite to apply it.",
+    description: "Request an AI rewrite proposal for a specific section of the draft. Starts ASYNC generation in the background and returns immediately with status 'rewriting' + a proposalId. Generation takes 2-5 minutes. Poll get_ai_conversation every 15-20 seconds until the proposal's status becomes 'proposed' (then use apply_rewrite) or 'failed'. Do NOT call request_rewrite again while a proposal is 'rewriting'.",
     inputSchema: {
       type: "object",
       required: ["id", "action"],
@@ -417,6 +417,17 @@ export async function handleAiWriterTool(name: string, args: Record<string, unkn
       const body: Record<string, unknown> = { action: args.action };
       if (args.selectedText) body.selectedText = args.selectedText;
       const { status, data } = await apiRequest("POST", `/api/admin/ai/conversations/${args.id}/rewrite`, body);
+      if (status === 202) {
+        const result = data as Record<string, unknown>;
+        return ok({
+          success: true,
+          status: "rewriting",
+          proposalId: result.proposalId,
+          conversationId: result.conversationId || args.id,
+          message: result.message || "Rewrite started in background. Poll get_ai_conversation every 15-20 seconds until the proposal status becomes 'proposed' or 'failed'.",
+          pollTool: "get_ai_conversation",
+        });
+      }
       if (status === 200) {
         const result = data as Record<string, unknown>;
         const proposal = result.proposal as Record<string, unknown> | undefined;

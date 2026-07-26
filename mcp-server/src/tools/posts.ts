@@ -51,6 +51,7 @@ export const postTools: Tool[] = [
         metaTitle: { type: "string", description: "Custom SEO title" },
         metaDescription: { type: "string", description: "Custom SEO meta description" },
         ogImage: { type: "string", description: "Custom Open Graph image URL" },
+        tldr: { type: "string", description: "Short TL;DR / key takeaways shown at the top of the post (under 150 words). Boosts AI search (GEO) extraction. Plain text or inline HTML." },
         scheduledAt: { type: "string", description: "ISO 8601 datetime for scheduled publish (e.g. '2026-06-20T09:00:00Z')" },
       },
     },
@@ -74,6 +75,7 @@ export const postTools: Tool[] = [
         metaTitle: { type: "string" },
         metaDescription: { type: "string" },
         ogImage: { type: "string" },
+        tldr: { type: "string", description: "Short TL;DR / key takeaways shown at the top of the post. Pass null or empty to clear." },
         scheduledAt: { type: "string", description: "ISO 8601 datetime, or null to clear" },
       },
     },
@@ -264,6 +266,7 @@ export async function handlePostTool(name: string, args: Record<string, unknown>
       if (args.metaTitle !== undefined) body.metaTitle = args.metaTitle;
       if (args.metaDescription !== undefined) body.metaDescription = args.metaDescription;
       if (args.ogImage !== undefined) body.ogImage = args.ogImage;
+      if (args.tldr !== undefined) body.tldr = args.tldr;
       if (args.scheduledAt) body.scheduledAt = args.scheduledAt;
 
       const { status, data } = await apiRequest<Post>("POST", "/api/posts", body);

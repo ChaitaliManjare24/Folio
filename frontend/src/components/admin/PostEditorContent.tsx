@@ -24,6 +24,7 @@ interface PostData {
   metaDescription: string;
   featuredImage: string;
   ogImage: string;
+  tldr: string;
 }
 
 export default function PostEditorContent({ postId }: { postId?: string }) {
@@ -52,6 +53,7 @@ export default function PostEditorContent({ postId }: { postId?: string }) {
     metaDescription: "",
     featuredImage: "",
     ogImage: "",
+    tldr: "",
   });
 
   useEffect(() => {
@@ -85,6 +87,7 @@ export default function PostEditorContent({ postId }: { postId?: string }) {
             metaDescription: (post.metaDescription as string) || "",
             featuredImage: (post.featuredImage as string) || "",
             ogImage: (post.ogImage as string) || "",
+            tldr: (post.tldr as string) || "",
           });
           isDirtyRef.current = false;
         })
@@ -120,6 +123,7 @@ export default function PostEditorContent({ postId }: { postId?: string }) {
         scheduledAt: form.scheduledAt || null,
         featuredImage: form.featuredImage || null,
         ogImage: form.ogImage || null,
+        tldr: form.tldr || null,
         metaTitle: form.metaTitle || null,
         metaDescription: form.metaDescription || null,
       };
@@ -447,10 +451,24 @@ export default function PostEditorContent({ postId }: { postId?: string }) {
                 />
               </div>
 
-              {/* Featured image URL */}
-               <div>
-                 <label className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] uppercase tracking-widest mb-[var(--space-2)] block" style={{ color: "var(--color-text-tertiary)" }}>
-                   Featured Image
+              {/* TL;DR / Key Takeaways */}
+              <div>
+                <label className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] uppercase tracking-widest mb-[var(--space-2)] block" style={{ color: "var(--color-text-tertiary)" }}>
+                  TL;DR / Key Takeaways
+                </label>
+                <textarea
+                  value={form.tldr}
+                  onChange={(e) => updateForm({ tldr: e.target.value })}
+                  placeholder="A short summary shown at the top of the post (under 150 words). Great for AI search."
+                  rows={3}
+                  className="w-full text-[var(--text-sm)] p-[var(--space-2)] resize-none outline-none focus:ring-2 focus:ring-[var(--color-accent)]/30 focus:border-[var(--color-accent)] transition-colors"
+                  style={{ background: "var(--color-bg)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-sm)", color: "var(--color-text)" }}
+                />
+              </div>
+
+              <div>
+                <label className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] uppercase tracking-widest mb-[var(--space-2)] block" style={{ color: "var(--color-text-tertiary)" }}>
+                  Featured Image
                  </label>
                  <div className="flex gap-[var(--space-2)]">
                    <input

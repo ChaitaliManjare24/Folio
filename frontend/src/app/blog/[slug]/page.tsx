@@ -228,6 +228,70 @@ function renderMarkdown(markdown: string) {
   return marked.parse(markdown, { renderer }) as string;
 }
 
+const AUTHOR_JOB_TITLE = "Performance Marketing & Automation Engineer";
+const AUTHOR_DESCRIPTION =
+  "10+ years managing $50M+ in ad spend across Meta, Google, Bing, and TikTok";
+const PUBLISHER_NAME = "bit2byte";
+
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+function extractFaqItems(html: string): FaqItem[] {
+  if (!html) return [];
+
+  const headingMatch = html.match(
+    /<h[1-6][^>]*>\s*(?:Frequently\s+Asked\s+Questions|FAQ)\s*<\/h[1-6]>/i
+  );
+  if (!headingMatch || headingMatch.index === undefined) return [];
+
+  const afterHeading = html.slice(headingMatch.index + headingMatch[0].length);
+  const ulMatch = afterHeading.match(/<ul[^>]*>([\s\S]*?)<\/ul>/i);
+  if (!ulMatch) return [];
+
+  const ulContent = ulMatch[1];
+  const items: FaqItem[] = [];
+  const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
+  let liMatch: RegExpExecArray | null;
+
+  while ((liMatch = liRegex.exec(ulContent)) !== null) {
+    const li = liMatch[1];
+    const strongMatch = li.match(/<strong[^>]*>([\s\S]*?)<\/strong>/i);
+    const pMatch = li.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+
+    const question = stripHtml(strongMatch ? strongMatch[1] : "");
+
+    let answerRaw = "";
+    if (pMatch) {
+      answerRaw = pMatch[1];
+    } else if (strongMatch) {
+      const strongEnd = li.toLowerCase().indexOf("</strong>");
+      if (strongEnd >= 0) answerRaw = li.slice(strongEnd + "</strong>".length);
+    }
+    const answer = stripHtml(answerRaw);
+
+    if (question && answer) {
+      items.push({ question, answer });
+    }
+  }
+
+  return items;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -242,7 +306,8 @@ export async function generateMetadata({
     const title = post.metaTitle || post.title;
     const description = post.metaDescription || post.excerpt || post.title;
     const canonicalUrl = `${siteUrl}/blog/${post.slug}`;
-    const imageUrl = toAbsoluteUrl(post.ogImage || post.featuredImage);
+    const featuredImageUrl = toAbsoluteUrl(post.ogImage || post.featuredImage);
+    const imageUrl = featuredImageUrl || `${siteUrl}/blog/${post.slug}/opengraph-image`;
 
     return {
       title,
@@ -257,13 +322,14 @@ export async function generateMetadata({
         description,
         siteName: settings.siteConfig.title,
         publishedTime: post.publishedAt || undefined,
-        images: imageUrl ? [{ url: imageUrl }] : undefined,
+        modifiedTime: post.updatedAt || undefined,
+        images: [{ url: imageUrl }],
       },
       twitter: {
-        card: imageUrl ? "summary_large_image" : "summary",
+        card: "summary_large_image",
         title,
         description,
-        images: imageUrl ? [imageUrl] : undefined,
+        images: [imageUrl],
       },
     };
   } catch (error) {
@@ -355,30 +421,107 @@ export default async function BlogPostPage({
     renderBody(post.body ?? "").replace(/<h1[^>]*>[\s\S]*?<\/h1>/i, "")
   );
 
+  const authorName = settings.siteConfig.authorName || "Amit Sharma";
+  const publisherName = PUBLISHER_NAME;
+  const publisherLogoUrl =
+    toAbsoluteUrl(settings.siteConfig.logoUrl) || `${siteUrl}/uploads/logo-mark.svg`;
+  const postImageUrl =
+    toAbsoluteUrl(post.ogImage || post.featuredImage) ||
+    `${siteUrl}/blog/${post.slug}/opengraph-image`;
+  const canonicalUrl = `${siteUrl}/blog/${post.slug}`;
+
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt || post.metaDescription || post.title,
+    datePublished: post.publishedAt || undefined,
+    dateModified: post.updatedAt || post.publishedAt || undefined,
+    image: postImageUrl,
+    author: {
+      "@type": "Person",
+      name: authorName,
+      url: `${siteUrl}/about`,
+      jobTitle: AUTHOR_JOB_TITLE,
+      description: AUTHOR_DESCRIPTION,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: publisherName,
+      url: siteUrl,
+      logo: {
+        "@type": "ImageObject",
+        url: publisherLogoUrl,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonicalUrl,
+    },
+  };
+
+  const faqItems = extractFaqItems(post.body ?? "");
+  const faqPageSchema =
+    faqItems.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            "@type": "Question",
+            name: question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: answer,
+            },
+          })),
+        }
+      : null;
+
+  const breadcrumbElements: Array<{ position: number; name: string; item?: string }> = [
+    { position: 1, name: "Home", item: `${siteUrl}/` },
+    { position: 2, name: "Blog", item: `${siteUrl}/blog` },
+  ];
+  if (post.category) {
+    breadcrumbElements.push({
+      position: 3,
+      name: post.category.name,
+      item: `${siteUrl}/blog?category=${post.category.slug}`,
+    });
+  }
+  breadcrumbElements.push({ position: breadcrumbElements.length + 1, name: post.title });
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: breadcrumbElements.map((el) => ({
+      "@type": "ListItem",
+      position: el.position,
+      name: el.name,
+      ...(el.item ? { item: el.item } : {}),
+    })),
+  };
+
+  const showUpdatedDate =
+    !!post.updatedAt &&
+    !!post.publishedAt &&
+    new Date(post.updatedAt).getTime() - new Date(post.publishedAt).getTime() >
+      24 * 60 * 60 * 1000;
+
   return (
     <PageWrapper>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: post.title,
-            description: post.excerpt || post.metaDescription || post.title,
-            datePublished: post.publishedAt || undefined,
-            author: {
-              "@type": "Person",
-              name: settings.siteConfig.authorName || undefined,
-            },
-            ...(post.featuredImage
-              ? { image: `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3201"}${post.featuredImage}` }
-              : {}),
-            mainEntityOfPage: {
-              "@type": "WebPage",
-              "@id": `${siteUrl}/blog/${post.slug}`,
-            },
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
+      />
+      {faqPageSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <ReadingProgressBar />
       <article className="max-w-[var(--max-width)] mx-auto px-[var(--space-4)] md:px-[var(--space-8)] py-[var(--space-16)]">
@@ -410,6 +553,14 @@ export default async function BlogPostPage({
                 style={{ color: "var(--color-text-tertiary)" }}
               >
                 {formatDate(post.publishedAt)}
+              </span>
+            )}
+            {showUpdatedDate && post.updatedAt && (
+              <span
+                className="font-[family-name:var(--font-mono)] text-[var(--text-xs)]"
+                style={{ color: "var(--color-text-tertiary)" }}
+              >
+                &middot; Updated {formatDate(post.updatedAt)}
               </span>
             )}
             <span
@@ -444,6 +595,17 @@ export default async function BlogPostPage({
         </header>
 
         <TableOfContents />
+
+        {post.tldr && post.tldr.trim() && (
+          <div
+            className="tldr-box"
+            role="region"
+            aria-label="Key takeaways"
+            dangerouslySetInnerHTML={{
+              __html: `<strong>Quick answer:</strong> ${sanitizeRenderedHtml(post.tldr)}`,
+            }}
+          />
+        )}
 
         <div
           className="prose"

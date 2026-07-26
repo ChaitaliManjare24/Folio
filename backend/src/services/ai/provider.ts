@@ -154,6 +154,49 @@ class MockAiProvider implements AiChatProvider {
   }
 }
 
+const TRANSIENT_HTTP_STATUS = new Set([408, 425, 429, 500, 502, 503, 504]);
+const MAX_NETWORK_ATTEMPTS = 4;
+const NETWORK_BACKOFF_BASE_MS = 2000;
+const NETWORK_BACKOFF_MAX_MS = 10000;
+const FETCH_TIMEOUT_MS = 300000;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchWithRetry(url: string, init: RequestInit): Promise<Response> {
+  let lastError: unknown = null;
+  for (let attempt = 0; attempt < MAX_NETWORK_ATTEMPTS; attempt += 1) {
+    if (attempt > 0) {
+      const delay = Math.min(NETWORK_BACKOFF_BASE_MS * 2 ** (attempt - 1), NETWORK_BACKOFF_MAX_MS);
+      console.warn(
+        `[ai] network retry ${attempt + 1}/${MAX_NETWORK_ATTEMPTS} in ${delay}ms — previous: ${
+          lastError instanceof Error ? lastError.message : String(lastError)
+        }`
+      );
+      await sleep(delay);
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    try {
+      const response = await fetch(url, { ...init, signal: controller.signal });
+      if (TRANSIENT_HTTP_STATUS.has(response.status)) {
+        await response.text().catch(() => undefined);
+        lastError = new Error(`Transient HTTP ${response.status} from AI provider`);
+        continue;
+      }
+      return response;
+    } catch (error) {
+      lastError = error;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("AI provider request failed after network retries");
+}
+
 class OpenAiCompatibleProvider implements AiChatProvider {
   readonly providerName = "openai-compatible" as const;
 
@@ -187,7 +230,7 @@ class OpenAiCompatibleProvider implements AiChatProvider {
     }
 
     const startedAt = Date.now();
-    const response = await fetch(`${this.config.baseUrl}/chat/completions`, {
+    const response = await fetchWithRetry(`${this.config.baseUrl}/chat/completions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

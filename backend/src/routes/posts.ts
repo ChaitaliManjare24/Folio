@@ -177,7 +177,7 @@ export function createPostsRouter({ prismaClient = prisma }: { prismaClient?: Po
   // POST /api/posts - admin, create post
   router.post("/", authMiddleware, requireRoleWithClient(prismaClient, "admin", "editor", "author"), async (req: AuthRequest, res) => {
     try {
-      const { excerpt, body, categoryId, tagIds, status, featuredImage, metaTitle, metaDescription, ogImage, scheduledAt } = req.body;
+      const { excerpt, body, categoryId, tagIds, status, featuredImage, metaTitle, metaDescription, ogImage, tldr, scheduledAt } = req.body;
       const title = trimmedString(req.body.title);
       const slug = trimmedString(req.body.slug);
 
@@ -208,6 +208,7 @@ export function createPostsRouter({ prismaClient = prisma }: { prismaClient?: Po
           metaTitle: metaTitle || null,
           metaDescription: metaDescription || null,
           ogImage: ogImage || null,
+          tldr: trimmedString(tldr) || null,
           authorId: req.userId!,
           tags: tagIds?.length ? { connect: tagIds.map((id: string) => ({ id })) } : undefined,
         },
@@ -242,7 +243,7 @@ export function createPostsRouter({ prismaClient = prisma }: { prismaClient?: Po
   // PUT /api/posts/:id - admin, update post
   router.put("/:id", authMiddleware, requireOwnershipOrRoleWithClient(prismaClient, "admin", "editor"), async (req: AuthRequest, res) => {
     try {
-      const { title, slug, excerpt, body, categoryId, tagIds, status, featuredImage, metaTitle, metaDescription, ogImage, scheduledAt } = req.body;
+      const { title, slug, excerpt, body, categoryId, tagIds, status, featuredImage, metaTitle, metaDescription, ogImage, tldr, scheduledAt } = req.body;
 
       const existing = await prismaClient.post.findUnique({ where: { id: param(req, "id") } });
       if (!existing) {
@@ -278,6 +279,7 @@ export function createPostsRouter({ prismaClient = prisma }: { prismaClient?: Po
           ...(metaTitle !== undefined && { metaTitle }),
           ...(metaDescription !== undefined && { metaDescription }),
           ...(ogImage !== undefined && { ogImage }),
+          ...(tldr !== undefined && { tldr: trimmedString(tldr) || null }),
           ...(tagIds !== undefined && {
             tags: { set: tagIds.map((id: string) => ({ id })) },
           }),

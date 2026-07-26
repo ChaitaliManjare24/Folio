@@ -344,6 +344,7 @@ function createAiService(overrides: Partial<BlogStudioAiService> = {}): BlogStud
     title: "AI Tools for Small Business Marketing",
     slug: "ai-tools-small-business-marketing",
     excerpt: "How small businesses can use AI tools effectively.",
+    tldr: "AI tools help small businesses automate marketing, create content faster, and compete with larger teams — start with one workflow before scaling.",
     metaTitle: "AI tools for small business marketing",
     metaDescription: "A practical guide to AI tools for small business marketing.",
     ogImagePrompt: "Modern AI dashboard for small business marketing",

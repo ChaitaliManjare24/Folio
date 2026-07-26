@@ -124,6 +124,7 @@ export interface AiDraftData {
   title: string;
   slug: string;
   excerpt: string;
+  tldr: string;
   metaTitle: string;
   metaDescription: string;
   ogImagePrompt: string;
@@ -455,6 +456,7 @@ function normalizeDraft(value: unknown, fallbackTopic: string): AiDraftData {
     title,
     slug: slugify(rawSlug || title),
     excerpt: clamp(typeof record.excerpt === "string" ? record.excerpt : "", 320),
+    tldr: clamp(typeof record.tldr === "string" ? record.tldr : "", 1000),
     metaTitle: clamp(typeof record.metaTitle === "string" ? record.metaTitle : title, 160),
     metaDescription: clamp(typeof record.metaDescription === "string" ? record.metaDescription : "", 320),
     ogImagePrompt: clamp(typeof record.ogImagePrompt === "string" ? record.ogImagePrompt : "", 400),
@@ -510,6 +512,7 @@ function normalizeDraftPatch(value: unknown): Partial<AiDraftData> {
   if (typeof record.title === "string") patch.title = clamp(record.title, 160);
   if (typeof record.slug === "string") patch.slug = slugify(record.slug);
   if (typeof record.excerpt === "string") patch.excerpt = clamp(record.excerpt, 320);
+  if (typeof record.tldr === "string") patch.tldr = clamp(record.tldr, 1000);
   if (typeof record.metaTitle === "string") patch.metaTitle = clamp(record.metaTitle, 160);
   if (typeof record.metaDescription === "string") patch.metaDescription = clamp(record.metaDescription, 320);
   if (typeof record.contentHtml === "string") patch.contentHtml = ensureHtmlContent(record.contentHtml, patch.title || "Draft");
@@ -935,6 +938,7 @@ export function createBlogStudioAiService({
         usedMetadataFallback = true;
         metadataResult = {
           excerpt: contentSummary.excerpt,
+          tldr: contentSummary.excerpt,
           metaTitle: typeof contentResult.title === "string" ? contentResult.title : draftInput.topic,
           metaDescription: contentSummary.excerpt,
           tagSuggestions: [],
