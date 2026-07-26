@@ -26,8 +26,8 @@ export default function LandingFooter({ settings }: { settings: PublicSettings }
           <a href="/#process">{nav.process || "Process"}</a>
           <a href="/#stack">{nav.stack || "Stack"}</a>
           <a href="/about">About</a>
-          <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
-          <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
+          <a href="/portfolio">{nav.projects || "Projects"}</a>
+          <a href="/blog">{nav.blog || "Blog"}</a>
         </nav>
         <nav className="footer-col" aria-label="Connect">
           <h4>{footer.connectTitle || "connect"}</h4>

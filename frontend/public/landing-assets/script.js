@@ -6,12 +6,12 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
   /* ---------- header shrink + scroll progress ---------- */
-  const header   = $('#header');
-  const progress = $('.scroll-progress i');
-  if (header || progress) {
+  if ($('.scroll-progress i') || $('#header')) {
     const onScroll = () => {
       const y = window.scrollY;
+      const header = $('#header');       // re-query each time (survives SPA navigation)
       if (header) header.classList.toggle('scrolled', y > 24);
+      const progress = $('.scroll-progress i');
       if (progress) {
         const h = document.documentElement.scrollHeight - window.innerHeight;
         progress.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
