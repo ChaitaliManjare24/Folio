@@ -320,6 +320,41 @@ You can validate any post's structured data with [Google Rich Results Test](http
 
 ---
 
+## Custom Landing Page
+
+The bare homepage (`/`) is served by a **standalone static landing page** — not the Next.js app. This lets you ship a fast, hand-crafted marketing page while the Next.js app powers the blog, portfolio, and admin.
+
+### Hybrid routing
+
+| URL | Served by |
+|-----|-----------|
+| `/` (exact root) | **Static landing page** (`landing/index.html`) |
+| `/landing-assets/*` | Static assets from `landing/` |
+| `/portfolio` | Static gallery page (`landing/portfolio.html`) |
+| `/blog`, `/about`, `/projects`, `/contact`, `/api/*`, `/uploads/*`, `/admin`, `/feed.xml` | **SimpleAIFolio Next.js app** |
+
+Only the *exact* root (`location = /`) is intercepted by the static page; everything else falls through to the Next.js frontend (exact-match wins over the prefix rule).
+
+### The `landing/` directory
+
+```
+landing/
+├── index.html       # marketing homepage served at /
+├── portfolio.html   # template gallery served at /portfolio
+├── styles.css
+└── script.js
+```
+
+The `landing/` folder is **bind-mounted** into the gateway container (`./landing:/var/www/landing:ro` in `docker-compose.prod.yml`), so **edits take effect immediately** — just edit the files and reload the page. No rebuild or restart required.
+
+### Customizing it
+
+- Edit `landing/index.html` (and `styles.css` / `script.js`) to make the homepage your own.
+- The Next.js app's homepage route (`/` in the frontend) is bypassed for the bare root, so change the homepage here, not in the frontend.
+- If you'd rather have the Next.js app serve `/` instead, remove the `location = /` block from `deploy/nginx.conf`.
+
+---
+
 ## Production Deployment
 
 ### Deploy to a VPS
