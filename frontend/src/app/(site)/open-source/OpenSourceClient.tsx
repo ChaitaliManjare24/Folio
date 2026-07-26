@@ -1,24 +1,22 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
-import PageWrapper from "@/components/PageWrapper";
 import type { OpenSourceProject } from "@/types";
+import "./open-source.css";
 
 export default function OpenSourcePage({ projects }: { projects: OpenSourceProject[] }) {
   const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<string>("All");
-  const [activeLanguage, setActiveLanguage] = useState<string>("All");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeLanguage, setActiveLanguage] = useState("All");
 
   const categories = useMemo(() => {
-    const set = new Set<string>();
-    projects.forEach((p) => p.category && set.add(p.category));
+    const set = new Set(projects.map((p) => p.category).filter(Boolean) as string[]);
     return ["All", ...Array.from(set).sort()];
   }, [projects]);
 
   const languages = useMemo(() => {
-    const set = new Set<string>();
-    projects.forEach((p) => p.language && set.add(p.language));
+    const set = new Set(projects.map((p) => p.language).filter(Boolean) as string[]);
     return ["All", ...Array.from(set).sort()];
   }, [projects]);
 
@@ -39,175 +37,77 @@ export default function OpenSourcePage({ projects }: { projects: OpenSourceProje
   }, [projects, query, activeCategory, activeLanguage]);
 
   return (
-    <PageWrapper>
-      <div className="max-w-[var(--max-width)] mx-auto px-[var(--space-4)] md:px-[var(--space-8)] py-[var(--space-16)]">
+    <div className="os-section">
+      <div className="wrap" style={{ maxWidth: "var(--maxw)", margin: "0 auto", paddingInline: "var(--pad)" }}>
         {/* Header */}
-        <div className="mb-[var(--space-12)]">
-          <p
-            className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] uppercase tracking-widest mb-[var(--space-4)]"
-            style={{ color: "var(--color-accent)" }}
-          >
-            Open Source
-          </p>
-          <h1
-            className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-semibold mb-[var(--space-4)]"
-            style={{ color: "var(--color-text)", fontSize: "clamp(2rem, 5vw, var(--text-3xl))" }}
-          >
-            Discover Open Source
-          </h1>
-          <p
-            className="font-[family-name:var(--font-body)] text-[var(--text-base)] max-w-[var(--measure)]"
-            style={{ color: "var(--color-text-secondary)" }}
-          >
-            A curated directory of open-source projects worth knowing — across AI, dev tools, web, and more.
-          </p>
+        <div className="os-head">
+          <p className="os-kicker"><span>// Directory</span> Open source projects worth knowing</p>
+          <h1 className="os-title">Discover <span className="hl">Open Source</span></h1>
+          <p className="os-subtitle">A curated directory of open-source projects across AI, dev tools, web, and more — hand-picked and maintained.</p>
         </div>
 
-        {/* Search + filters */}
-        <div className="flex flex-col gap-[var(--space-4)] mb-[var(--space-10)]">
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search projects, authors, topics..."
-            className="w-full font-[family-name:var(--font-body)] text-[var(--text-base)] p-[var(--space-3)] outline-none focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors"
-            style={{
-              background: "var(--color-bg-subtle)",
-              border: "1px solid var(--color-border)",
-              borderRadius: "var(--radius-md)",
-              color: "var(--color-text)",
-            }}
-          />
-          <div className="flex flex-wrap gap-[var(--space-4)]">
-            <FilterGroup label="Category" options={categories} active={activeCategory} onSelect={setActiveCategory} />
-            <FilterGroup label="Language" options={languages} active={activeLanguage} onSelect={setActiveLanguage} />
+        {/* Search */}
+        <input
+          type="text"
+          className="os-search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search projects, authors, topics…"
+        />
+
+        {/* Filters */}
+        <div className="os-filters">
+          <div className="os-filter-group">
+            <span className="os-filter-label">Category</span>
+            {categories.map((c) => (
+              <button key={c} className={`os-pill${activeCategory === c ? " active" : ""}`} onClick={() => setActiveCategory(c)}>{c}</button>
+            ))}
+          </div>
+          <div className="os-filter-group">
+            <span className="os-filter-label">Language</span>
+            {languages.map((l) => (
+              <button key={l} className={`os-pill${activeLanguage === l ? " active" : ""}`} onClick={() => setActiveLanguage(l)}>{l}</button>
+            ))}
           </div>
         </div>
 
-        {/* Results count */}
-        <p
-          className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] uppercase tracking-wider mb-[var(--space-6)]"
-          style={{ color: "var(--color-text-tertiary)" }}
-        >
-          {filtered.length} {filtered.length === 1 ? "project" : "projects"}
-        </p>
+        <p className="os-count">{filtered.length} {filtered.length === 1 ? "project" : "projects"}</p>
 
         {/* Grid */}
         {filtered.length === 0 ? (
-          <p className="font-[family-name:var(--font-body)] text-[var(--text-base)]" style={{ color: "var(--color-text-tertiary)" }}>
-            No projects match your filters.
-          </p>
+          <p className="os-empty">No projects match your filters.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-6)]">
-            {filtered.map((project) => (
-              <RepoCard key={project.id} project={project} />
+          <div className="os-grid">
+            {filtered.map((p) => (
+              <Link key={p.id} href={`/open-source/${p.slug}`} className="os-card-link">
+                <article className="os-card reveal">
+                  <div className="os-card-body">
+                    <div className="os-card-top">
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <h3 className="os-card-title">{p.title}</h3>
+                        <p className="os-card-author">by {p.author}</p>
+                      </div>
+                      {p.language && <span className="os-lang-badge">{p.language}</span>}
+                    </div>
+                    <p className="os-card-tagline">{p.tagline}</p>
+                    {p.topics.length > 0 && (
+                      <div className="os-card-topics">
+                        {p.topics.slice(0, 4).map((t) => <span key={t}>{t}</span>)}
+                      </div>
+                    )}
+                    <div className="os-card-stats">
+                      {p.stars > 0 && <span>★ {p.stars.toLocaleString()}</span>}
+                      {p.forks > 0 && <span>⑂ {p.forks.toLocaleString()}</span>}
+                      {p.license && <span>{p.license}</span>}
+                      {p.category && <span>{p.category}</span>}
+                    </div>
+                  </div>
+                </article>
+              </Link>
             ))}
           </div>
         )}
       </div>
-    </PageWrapper>
-  );
-}
-
-function FilterGroup({
-  label,
-  options,
-  active,
-  onSelect,
-}: {
-  label: string;
-  options: string[];
-  active: string;
-  onSelect: (v: string) => void;
-}) {
-  return (
-    <div className="flex flex-wrap items-center gap-[var(--space-2)]">
-      <span
-        className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] uppercase tracking-wider mr-[var(--space-1)]"
-        style={{ color: "var(--color-text-tertiary)" }}
-      >
-        {label}:
-      </span>
-      {options.map((opt) => (
-        <button
-          key={opt}
-          onClick={() => onSelect(opt)}
-          className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] px-[var(--space-3)] py-[var(--space-1)] cursor-pointer transition-colors"
-          style={{
-            background: active === opt ? "var(--color-accent)" : "var(--color-bg-muted)",
-            color: active === opt ? "var(--color-accent-on)" : "var(--color-text-secondary)",
-            borderRadius: "var(--radius-sm)",
-            border: "1px solid var(--color-border)",
-          }}
-        >
-          {opt}
-        </button>
-      ))}
     </div>
-  );
-}
-
-function RepoCard({ project }: { project: OpenSourceProject }) {
-  return (
-    <Link
-      href={`/open-source/${project.slug}`}
-      className="group flex flex-col p-[var(--space-6)] transition-colors"
-      style={{ background: "var(--color-bg-subtle)", borderRadius: "var(--radius-lg)", border: "1px solid var(--color-border)" }}
-    >
-      <div className="flex items-start justify-between gap-[var(--space-3)] mb-[var(--space-3)]">
-        <div className="min-w-0">
-          <h3
-            className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-semibold group-hover:text-[var(--color-accent)] transition-colors truncate"
-            style={{ color: "var(--color-text)" }}
-          >
-            {project.title}
-          </h3>
-          <p
-            className="font-[family-name:var(--font-mono)] text-[var(--text-xs)]"
-            style={{ color: "var(--color-text-tertiary)" }}
-          >
-            {project.author}
-          </p>
-        </div>
-        {project.language && (
-          <span
-            className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] px-[var(--space-2)] py-[var(--space-1)] flex-shrink-0"
-            style={{ background: "var(--color-accent-lightest)", color: "var(--color-accent)", borderRadius: "var(--radius-sm)" }}
-          >
-            {project.language}
-          </span>
-        )}
-      </div>
-
-      <p
-        className="font-[family-name:var(--font-body)] text-[var(--text-sm)] mb-[var(--space-4)] line-clamp-2"
-        style={{ color: "var(--color-text-secondary)" }}
-      >
-        {project.tagline}
-      </p>
-
-      {project.topics.length > 0 && (
-        <div className="flex flex-wrap gap-[var(--space-1)] mb-[var(--space-4)]">
-          {project.topics.slice(0, 4).map((t) => (
-            <span
-              key={t}
-              className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] px-[var(--space-2)] py-[var(--space-1)]"
-              style={{ background: "var(--color-bg-muted)", color: "var(--color-text-tertiary)", borderRadius: "var(--radius-sm)" }}
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-      )}
-
-      <div
-        className="flex items-center gap-[var(--space-4)] mt-auto pt-[var(--space-3)] font-[family-name:var(--font-mono)] text-[var(--text-xs)]"
-        style={{ color: "var(--color-text-tertiary)", borderTop: "1px solid var(--color-border)" }}
-      >
-        {project.stars > 0 && <span>★ {project.stars.toLocaleString()}</span>}
-        {project.forks > 0 && <span>⑂ {project.forks.toLocaleString()}</span>}
-        {project.license && <span>{project.license}</span>}
-      </div>
-    </Link>
   );
 }
