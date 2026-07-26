@@ -23,7 +23,8 @@
   --mono-l: "JetBrains Mono", ui-monospace, monospace;
 }
 
-/* ---------- layout container ---------- */
+/* ---------- push content below the fixed header ---------- */
+main{padding-top:clamp(72px,9vw,96px)}
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
 
 /* ---------- decorative ---------- */
