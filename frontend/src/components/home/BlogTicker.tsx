@@ -26,7 +26,7 @@ export default async function BlogTicker() {
       <div className="flex items-center">
         <Link
           href="/blog"
-          className="flex-shrink-0 font-[family-name:var(--font-display)] text-[var(--text-xs)] font-700 uppercase tracking-wider px-[var(--space-4)] py-[var(--space-2)]"
+          className="flex-shrink-0 font-[family-name:var(--font-display)] text-[var(--text-xs)] font-bold uppercase tracking-wider px-[var(--space-4)] py-[var(--space-2)]"
           style={{
             background: "var(--color-accent)",
             color: "var(--color-accent-on)",

@@ -28,7 +28,7 @@ export default async function RecentWriting() {
         <div className="max-w-[var(--max-width)] mx-auto px-[var(--space-6)] lg:px-[var(--space-12)]">
           <div className="section-label">Recent Writing</div>
           <h2
-            className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-700 mb-[var(--space-6)]"
+            className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-bold mb-[var(--space-6)]"
             style={{ letterSpacing: "-0.02em" }}
           >
             Latest Posts
@@ -53,7 +53,7 @@ export default async function RecentWriting() {
           <div>
             <div className="section-label">Recent Writing</div>
             <h2
-              className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-700"
+              className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-bold"
               style={{ letterSpacing: "-0.02em" }}
             >
               Latest Posts
@@ -61,7 +61,7 @@ export default async function RecentWriting() {
           </div>
           <Link
             href="/blog"
-            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-colors hover:text-[var(--color-accent)] hidden sm:block"
+            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-colors hover:text-[var(--color-accent)] hidden sm:block"
             style={{ color: "var(--color-text-secondary)" }}
           >
             View all &rarr;
@@ -81,7 +81,7 @@ export default async function RecentWriting() {
               </span>
             </div>
             <h3
-              className="font-[family-name:var(--font-display)] text-[var(--text-lg)] md:text-[var(--text-xl)] font-700 mb-[var(--space-3)] group-hover:text-[var(--color-accent)] transition-colors"
+              className="font-[family-name:var(--font-display)] text-[var(--text-lg)] md:text-[var(--text-xl)] font-bold mb-[var(--space-3)] group-hover:text-[var(--color-accent)] transition-colors"
               style={{ letterSpacing: "-0.015em" }}
             >
               {posts[0].title}
@@ -117,7 +117,7 @@ export default async function RecentWriting() {
                     </span>
                   </div>
                   <h3
-                    className="font-[family-name:var(--font-display)] text-[var(--text-base)] md:text-[var(--text-lg)] font-700 mb-[var(--space-2)] group-hover:text-[var(--color-accent)] transition-colors"
+                    className="font-[family-name:var(--font-display)] text-[var(--text-base)] md:text-[var(--text-lg)] font-bold mb-[var(--space-2)] group-hover:text-[var(--color-accent)] transition-colors"
                     style={{ letterSpacing: "-0.01em" }}
                   >
                     {post.title}
@@ -140,7 +140,7 @@ export default async function RecentWriting() {
         <div className="mt-[var(--space-8)] sm:hidden text-center">
           <Link
             href="/blog"
-            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500"
+            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium"
             style={{ color: "var(--color-accent)" }}
           >
             View all posts &rarr;

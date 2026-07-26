@@ -25,16 +25,16 @@ export default function Navigation({
         className="flex items-center justify-between h-full px-[var(--space-6)] lg:px-[var(--space-12)] max-w-[var(--max-width)] mx-auto"
       >
         {/* Logo */}
-        <Link
+         <Link
           href="/"
-          className="font-[family-name:var(--font-display)] text-[1.375rem] font-800 tracking-tight flex items-center gap-2"
-          style={{ color: "var(--color-text)" }}
+          className="font-[family-name:var(--font-display)] text-[1.25rem] font-extrabold flex items-center gap-[9px]"
+          style={{ color: "var(--color-text)", letterSpacing: "-0.02em" }}
         >
           {logoUrl ? (
-            <img src={logoUrl} alt={siteTitle} className="h-8 w-auto rounded-[var(--radius-sm)]" style={{ maxHeight: "32px" }} />
+            <img src={logoUrl} alt={siteTitle} className="h-[26px] w-auto rounded-[var(--radius-sm)]" style={{ maxHeight: "26px" }} />
           ) : (
             <span
-              className="inline-flex items-center justify-center w-8 h-8 text-[var(--text-sm)] font-700"
+              className="inline-flex items-center justify-center w-8 h-8 text-[var(--text-sm)] font-bold"
               style={{
                 background: "var(--color-accent)",
                 color: "var(--color-accent-on)",
@@ -45,10 +45,16 @@ export default function Navigation({
             </span>
           )}
           {siteTitle}
+          <span
+            className="font-[family-name:var(--font-mono)] font-medium text-[0.75rem]"
+            style={{ color: "var(--color-text-tertiary)", letterSpacing: 0 }}
+          >
+            /build
+          </span>
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-[var(--space-1)]">
+        <ul className="hidden md:flex items-center gap-[28px]">
           {navLinks.map((link) => {
             const isActive =
               link.href === "/"
@@ -58,16 +64,12 @@ export default function Navigation({
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="nav-link font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-[var(--space-4)] py-[var(--space-2)] transition-all duration-150"
+                  data-active={isActive ? "true" : undefined}
+                  className="nav-link font-[family-name:var(--font-mono)] text-[0.8125rem] font-medium py-[6px] transition-colors duration-150"
                   style={{
-                    color: isActive
-                      ? "var(--color-accent)"
-                      : "var(--color-text-secondary)",
-                    background: isActive ? "var(--color-accent-lightest)" : "transparent",
-                    borderRadius: "var(--radius-md)",
+                    color: isActive ? "var(--color-accent)" : "#34322d",
+                    letterSpacing: "0.01em",
                   }}
-                  onMouseEnter={(e) => { if (!isActive) e.currentTarget.style.background = "var(--color-bg-elevated)"; }}
-                  onMouseLeave={(e) => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
                 >
                   {link.label}
                 </Link>
@@ -133,7 +135,7 @@ export default function Navigation({
                 <Link
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="font-[family-name:var(--font-body)] text-[var(--text-base)] font-500 block px-[var(--space-3)] py-[var(--space-3)] transition-colors duration-150"
+                  className="font-[family-name:var(--font-body)] text-[var(--text-base)] font-medium block px-[var(--space-3)] py-[var(--space-3)] transition-colors duration-150"
                   style={{
                     color: isActive
                       ? "var(--color-accent)"

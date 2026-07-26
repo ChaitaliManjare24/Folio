@@ -148,13 +148,13 @@ function CategoriesContent() {
         <div className="mb-[var(--space-8)] flex flex-col gap-[var(--space-4)] sm:flex-row sm:items-center sm:justify-between">
           <h1 className="font-[family-name:var(--font-display)] text-[var(--text-xl)] font-semibold" style={{ color: "var(--color-text)" }}>Categories</h1>
           {!creating && !editing && (
-            <button onClick={startCreate} className="inline-flex min-h-[40px] items-center justify-center self-start px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 sm:self-auto" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}>+ New Category</button>
+            <button onClick={startCreate} className="inline-flex min-h-[40px] items-center justify-center self-start px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 sm:self-auto" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}>+ New Category</button>
           )}
         </div>
 
         {(creating || editing) && (
           <div className="mb-[var(--space-8)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-lg)" }}>
-            <h2 className="font-[family-name:var(--font-display)] text-[var(--text-base)] font-600 mb-[var(--space-4)]" style={{ color: "var(--color-text)" }}>{editing ? "Edit Category" : "New Category"}</h2>
+            <h2 className="font-[family-name:var(--font-display)] text-[var(--text-base)] font-semibold mb-[var(--space-4)]" style={{ color: "var(--color-text)" }}>{editing ? "Edit Category" : "New Category"}</h2>
             <div className="flex flex-col gap-[var(--space-4)]">
               <div>
                 <label htmlFor="category-name" className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] uppercase tracking-wider block mb-[var(--space-1)]" style={{ color: "var(--color-text-tertiary)" }}>Name</label>
@@ -174,8 +174,8 @@ function CategoriesContent() {
                 </p>
               )}
               <div className="flex flex-wrap gap-[var(--space-3)]">
-                <button onClick={handleSave} disabled={saving || !form.name} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-all duration-150 cursor-pointer hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}>{saving ? "Saving..." : editing ? "Update" : "Create"}</button>
-                <button onClick={cancel} disabled={saving} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-colors cursor-pointer hover:text-[var(--color-accent)] disabled:opacity-50 disabled:cursor-not-allowed" style={{ color: "var(--color-text-tertiary)", minHeight: "40px" }}>Cancel</button>
+                <button onClick={handleSave} disabled={saving || !form.name} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-all duration-150 cursor-pointer hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}>{saving ? "Saving..." : editing ? "Update" : "Create"}</button>
+                <button onClick={cancel} disabled={saving} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-colors cursor-pointer hover:text-[var(--color-accent)] disabled:opacity-50 disabled:cursor-not-allowed" style={{ color: "var(--color-text-tertiary)", minHeight: "40px" }}>Cancel</button>
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@ function CategoriesContent() {
             {categories.map((cat) => (
               <div key={cat.id} className="flex flex-col gap-[var(--space-3)] py-[var(--space-4)] sm:flex-row sm:items-center sm:justify-between" style={{ borderBottom: "1px solid var(--color-border)" }}>
                 <div className="min-w-0">
-                  <h3 className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-600" style={{ color: "var(--color-text)" }}>{cat.name}</h3>
+                  <h3 className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-semibold" style={{ color: "var(--color-text)" }}>{cat.name}</h3>
                   <span className="break-all font-[family-name:var(--font-mono)] text-[var(--text-xs)]" style={{ color: "var(--color-text-tertiary)" }}>{cat.slug} &middot; {cat.postCount || 0} posts</span>
                 </div>
                 <div className="flex flex-wrap gap-[var(--space-3)]">

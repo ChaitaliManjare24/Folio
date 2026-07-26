@@ -163,13 +163,13 @@ function SnippetsContent() {
             </p>
           </div>
           {!creating && !editing && (
-            <button onClick={startCreate} className="inline-flex min-h-[40px] items-center justify-center self-start px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 sm:self-auto" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)" }}>+ New Snippet</button>
+            <button onClick={startCreate} className="inline-flex min-h-[40px] items-center justify-center self-start px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 sm:self-auto" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)" }}>+ New Snippet</button>
           )}
         </div>
 
         {(creating || editing) && (
           <div className="mb-[var(--space-8)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-lg)" }}>
-            <h2 className="font-[family-name:var(--font-display)] text-[var(--text-base)] font-600 mb-[var(--space-4)]" style={{ color: "var(--color-text)" }}>{editing ? "Edit Snippet" : "New Snippet"}</h2>
+            <h2 className="font-[family-name:var(--font-display)] text-[var(--text-base)] font-semibold mb-[var(--space-4)]" style={{ color: "var(--color-text)" }}>{editing ? "Edit Snippet" : "New Snippet"}</h2>
             <div className="flex flex-col gap-[var(--space-4)]">
               <div className="flex flex-col sm:flex-row gap-[var(--space-4)]">
                 <div className="flex-1">
@@ -214,8 +214,8 @@ function SnippetsContent() {
                 <p className="text-[var(--text-sm)]" style={{ color: "var(--color-error)" }}>{formError}</p>
               )}
               <div className="flex flex-wrap gap-[var(--space-3)]">
-                <button onClick={handleSave} disabled={saving || !form.name || !form.code} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-all duration-150 cursor-pointer hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}>{saving ? "Saving..." : editing ? "Update" : "Create"}</button>
-                <button onClick={cancel} disabled={saving} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-colors cursor-pointer hover:text-[var(--color-accent)] disabled:opacity-50 disabled:cursor-not-allowed" style={{ color: "var(--color-text-tertiary)", minHeight: "40px" }}>Cancel</button>
+                <button onClick={handleSave} disabled={saving || !form.name || !form.code} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-all duration-150 cursor-pointer hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}>{saving ? "Saving..." : editing ? "Update" : "Create"}</button>
+                <button onClick={cancel} disabled={saving} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-colors cursor-pointer hover:text-[var(--color-accent)] disabled:opacity-50 disabled:cursor-not-allowed" style={{ color: "var(--color-text-tertiary)", minHeight: "40px" }}>Cancel</button>
               </div>
             </div>
           </div>
@@ -233,7 +233,7 @@ function SnippetsContent() {
               <div key={s.id} className="flex flex-col gap-[var(--space-3)] py-[var(--space-4)] sm:flex-row sm:items-start sm:justify-between" style={{ borderBottom: "1px solid var(--color-border)" }}>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-[var(--space-2)] mb-[var(--space-1)]">
-                    <h3 className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-600" style={{ color: "var(--color-text)" }}>{s.name}</h3>
+                    <h3 className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-semibold" style={{ color: "var(--color-text)" }}>{s.name}</h3>
                     <span className="font-[family-name:var(--font-mono)] text-[0.625rem] px-[var(--space-2)] py-0.5 rounded-full" style={{ background: "var(--color-bg-muted)", color: "var(--color-text-tertiary)" }}>{s.location === "head" ? "<head>" : "</body>"}</span>
                     {!s.enabled && (
                       <span className="font-[family-name:var(--font-mono)] text-[0.625rem] px-[var(--space-2)] py-0.5 rounded-full" style={{ background: "var(--color-bg-muted)", color: "var(--color-text-tertiary)" }}>disabled</span>

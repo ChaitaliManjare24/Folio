@@ -98,7 +98,7 @@ function CommentsContent() {
               <div key={c.id} className="rounded-[var(--radius-md)] p-[var(--space-4)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                 <div className="flex flex-wrap items-center justify-between gap-[var(--space-2)] mb-[var(--space-2)]">
                   <div className="flex items-center gap-[var(--space-3)]">
-                    <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-600" style={{ color: "var(--color-text)" }}>{c.author}</span>
+                    <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-semibold" style={{ color: "var(--color-text)" }}>{c.author}</span>
                     <span className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] uppercase tracking-wider px-2 py-0.5 rounded-full" style={{ background: "var(--color-bg)", color: statusColors[c.status] || "var(--color-text-tertiary)" }}>
                       {c.status}
                     </span>

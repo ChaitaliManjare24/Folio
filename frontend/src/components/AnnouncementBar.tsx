@@ -27,7 +27,7 @@ export default function AnnouncementBar({
       >
         <span className="announcement-dot inline-block w-2 h-2 rounded-full flex-shrink-0" style={{ background: "var(--color-accent)" }} />
         <span
-          className="announcement-text relative font-[family-name:var(--font-display)] text-[var(--text-base)] md:text-[var(--text-lg)] font-800 uppercase tracking-widest"
+          className="announcement-text relative font-[family-name:var(--font-display)] text-[var(--text-base)] md:text-[var(--text-lg)] font-extrabold uppercase tracking-widest"
           style={{ color: "var(--color-bg)" }}
         >
           {announcement.text}

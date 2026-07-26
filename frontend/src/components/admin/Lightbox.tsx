@@ -53,14 +53,14 @@ export default function Lightbox({ src, onClose }: LightboxProps) {
         <div className="mt-[var(--space-3)] flex items-center gap-[var(--space-3)]">
           <button
             onClick={() => void copyUrl()}
-            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-all duration-150 hover:brightness-110"
+            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-all duration-150 hover:brightness-110"
             style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)" }}
           >
             Copy URL
           </button>
           <button
             onClick={onClose}
-            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-colors cursor-pointer"
+            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-colors cursor-pointer"
             style={{ background: "rgba(255,255,255,0.15)", color: "white", borderRadius: "var(--radius-md)" }}
           >
             Close

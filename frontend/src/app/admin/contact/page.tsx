@@ -106,14 +106,14 @@ function ContactContent() {
                 <div className="flex items-start justify-between gap-[var(--space-4)]">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-[var(--space-2)] mb-[var(--space-1)]">
-                      <span className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-600" style={{ color: "var(--color-text)" }}>{msg.name}</span>
+                      <span className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-semibold" style={{ color: "var(--color-text)" }}>{msg.name}</span>
                       <span className="font-[family-name:var(--font-mono)] text-[var(--text-xs)]" style={{ color: "var(--color-text-tertiary)" }}>{msg.email}</span>
                       <span className="font-[family-name:var(--font-mono)] text-[var(--text-xs)]" style={{ color: "var(--color-text-tertiary)" }}>
                         {new Date(msg.createdAt).toLocaleDateString()}
                       </span>
                     </div>
                     {msg.subject && (
-                      <p className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 mb-[var(--space-1)]" style={{ color: "var(--color-text-secondary)" }}>{msg.subject}</p>
+                      <p className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium mb-[var(--space-1)]" style={{ color: "var(--color-text-secondary)" }}>{msg.subject}</p>
                     )}
                     <p className="font-[family-name:var(--font-body)] text-[var(--text-sm)] whitespace-pre-wrap" style={{ color: "var(--color-text-secondary)" }}>{msg.message}</p>
                   </div>

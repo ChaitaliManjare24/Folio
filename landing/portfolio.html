@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Amit Sharma</title>
+  <meta name="description" content="Landing pages and apps I've built — each a self-contained build with its own design and stack." />
+  <link rel="canonical" href="https://www.bit2byte.app/portfolio" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.bit2byte.app/portfolio" />
+  <meta property="og:title" content="Portfolio — Amit Sharma" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A0E1A'/%3E%3Cpath d='M4 28 L16 4 L28 28' stroke='%2331f' stroke-width='2.5' fill='none' stroke-linejoin='round'/%3E%3Cpath d='M9 28 L16 14 L23 28' stroke='%2331f' stroke-width='2.5' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJQ3RBFZWW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EJQ3RBFZWW');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/landing-assets/styles.css" />
+  <style>
+    /* ---- Tabs ---- */
+    .tabs{display:flex;gap:12px;margin-bottom:48px}
+    .tab{font-family:var(--mono);font-size:13px;font-weight:500;padding:9px 20px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--ink-2);cursor:pointer;transition:all .3s var(--ease);letter-spacing:.01em}
+    .tab.active{background:rgba(49,40,255,.18);color:var(--accent);border-color:rgba(49,40,255,.3);font-weight:600}
+    .tab:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+    .tab .tab-count{font-size:11px;opacity:.6;margin-left:4px}
+
+    /* ---- Pagination ---- */
+    .pagination{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:48px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+    .page-btn{font-family:var(--mono);font-size:13px;font-weight:500;padding:9px 20px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--ink-2);cursor:pointer;transition:all .3s var(--ease);letter-spacing:.01em}
+    .page-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:rgba(49,40,255,.18)}
+    .page-btn:disabled{opacity:.35;cursor:not-allowed}
+    .page-info b{color:var(--ink);font-weight:700}
+
+    /* ---- Portfolio card with live iframe preview ---- */
+    .pf-link{text-decoration:none;color:inherit;display:block}
+    .pf-card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper-2);cursor:pointer;transition:transform .35s var(--ease),border-color .35s var(--ease),box-shadow .35s var(--ease)}
+    .pf-link:hover .pf-card{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 16px 40px -16px rgba(19,18,16,.18)}
+    .pf-preview{position:relative;aspect-ratio:16/10;overflow:hidden;background:#e7e2d3}
+    .pf-preview iframe{position:absolute;top:0;left:0;width:1280px;height:800px;border:0;transform-origin:top left;pointer-events:none}
+    .pf-shade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(245,243,236,.95) 100%);pointer-events:none}
+    .pf-tag{position:absolute;top:12px;left:12px;font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;background:rgba(245,243,236,.85);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:4px;color:var(--ink-2)}
+    .pf-body{padding:22px 26px 26px}
+    .pf-num{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600}
+    .pf-body h3{font-size:20px;font-weight:700;margin:8px 0 6px;color:var(--ink)}
+    .pf-body p{font-size:14px;color:var(--muted);line-height:1.5}
+    .pf-link:hover .pf-body h3{color:var(--accent)}
+    .pf-view{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--accent);display:inline-block;margin-top:12px;transition:transform .3s var(--ease)}
+    .pf-link:hover .pf-view{transform:translateX(4px)}
+
+    .pf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+    .app-links{display:flex;gap:16px;margin-top:16px}
+    .app-links a{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--accent);transition:opacity .3s}
+    .app-links a:hover{opacity:.7}
+  </style>
+</head>
+<body>
+  <div class="blueprint" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><i></i></div>
+
+  <header class="site-header" id="header">
+    <div class="wrap header-inner">
+      <a href="/" class="logo" aria-label="Amit home">
+        <svg viewBox="0 0 32 32" class="logo-mark" aria-hidden="true">
+          <path d="M4 28 L16 4 L28 28" /><path d="M9 28 L16 14 L23 28" /><circle cx="16" cy="28" r="2" class="logo-dot" />
+        </svg>
+        <span class="logo-text">Amit<span>/build</span></span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/#principles">Principles</a>
+        <a href="/#process">Process</a>
+        <a href="/#stack">Stack</a>
+        <a href="/portfolio" class="nav-highlight">Projects</a>
+        <a href="/blog" class="nav-highlight">Blog</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+      <div class="header-cta">
+        <a href="/" class="status-pill"><i></i> Building — Q3 2026</a>
+        <a href="/contact" class="btn btn-dark">
+          <span>Contact</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="/#principles">Principles</a>
+      <a href="/#process">Process</a>
+      <a href="/#stack">Stack</a>
+      <a href="/portfolio" class="nav-highlight">Projects</a>
+      <a href="/blog" class="nav-highlight">Blog</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/contact" class="btn btn-dark">Contact</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section style="padding-top:120px;padding-bottom:20px">
+      <div class="wrap">
+        <p class="kicker reveal"><span>[ Portfolio ]</span> Selected work</p>
+        <h1 class="hero-title reveal" style="font-size:clamp(32px,5vw,56px);max-width:700px">
+          Things I've <span class="hl">built.</span>
+        </h1>
+        <p class="reveal" style="font-family:var(--mono);font-size:14px;color:var(--muted);max-width:580px;margin-top:20px;line-height:1.7">
+          Apps, tools and landing pages — each a self-contained build with its own
+          design, copy and stack. Click any card to see it live.
+        </p>
+
+        <!-- Tabs -->
+        <div class="tabs reveal" style="margin-top:48px">
+          <button class="tab active" data-tab="web">Web Design <span class="tab-count">(28)</span></button>
+          <button class="tab" data-tab="apps">Apps <span class="tab-count">(2)</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TAB: WEB DESIGN ============ -->
+    <div class="tab-panel" id="panel-web">
+      <section class="services" style="padding-top:0;padding-bottom:100px">
+        <div class="wrap">
+          <div class="pf-grid" id="web-grid">
+
+            <a href="/portfolio/01-northbound-agency/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:0">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/01-northbound-agency/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Agency</span></div>
+              <div class="pf-body"><span class="pf-num">01</span><h3>Northbound</h3><p>Attention is earned. Revenue is engineered.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/02-lenshaus-rentals/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:1">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/02-lenshaus-rentals/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Rental</span></div>
+              <div class="pf-body"><span class="pf-num">02</span><h3>LensHaus</h3><p>Pro Photo &amp; Cinema Gear Rental.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/03-aurelle-beauty/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:2">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/03-aurelle-beauty/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Beauty</span></div>
+              <div class="pf-body"><span class="pf-num">03</span><h3>Aurelle</h3><p>Skin, restored.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/04-dhara-ayurveda/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:3">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/04-dhara-ayurveda/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Wellness</span></div>
+              <div class="pf-body"><span class="pf-num">04</span><h3>Dhara</h3><p>Rooted rituals for modern life.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/06-velour-lipsticks/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:4">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/06-velour-lipsticks/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Beauty</span></div>
+              <div class="pf-body"><span class="pf-num">05</span><h3>VELOUR</h3><p>A Lip Wardrobe, Hand-Poured.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/07-renttech-india/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:5">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/07-renttech-india/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Rental</span></div>
+              <div class="pf-body"><span class="pf-num">06</span><h3>RentTech India</h3><p>Rent Premium Electronics Without Buying.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/08-himalayan-naturals/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:6">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/08-himalayan-naturals/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Wellness</span></div>
+              <div class="pf-body"><span class="pf-num">07</span><h3>Himalayan Naturals</h3><p>Pure Himalayan Herbs. Beautiful Healthy Hair.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/09-banglebazaar/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:7">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/09-banglebazaar/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Retail</span></div>
+              <div class="pf-body"><span class="pf-num">08</span><h3>BangleBazaar</h3><p>Every Bangle Tells A Beautiful Story.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/10-printerworld-india/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:8">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/10-printerworld-india/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Retail</span></div>
+              <div class="pf-body"><span class="pf-num">09</span><h3>PrinterWorld India</h3><p>India's Trusted Printer Store.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/11-cacao-atelier/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:9">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/11-cacao-atelier/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">F&amp;B</span></div>
+              <div class="pf-body"><span class="pf-num">10</span><h3>Cacao Atelier</h3><p>Bean-to-Bar Single-Origin Chocolate.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/12-monogram-studio/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:10">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/12-monogram-studio/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Agency</span></div>
+              <div class="pf-body"><span class="pf-num">11</span><h3>Monogram</h3><p>Brand Identity Studio.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/14-azure-sands/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:11">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/14-azure-sands/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Travel</span></div>
+              <div class="pf-body"><span class="pf-num">12</span><h3>Azure Sands</h3><p>Slow days, warm water.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/15-ironhaus/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:12">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/15-ironhaus/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Fitness</span></div>
+              <div class="pf-body"><span class="pf-num">13</span><h3>Ironhaus</h3><p>Lift Heavy. Leave the Fluff.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/16-volt/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:13">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/16-volt/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Automotive</span></div>
+              <div class="pf-body"><span class="pf-num">14</span><h3>Volt</h3><p>The Electric Bike That Goes the Distance.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/17-frame-studio/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:14">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/17-frame-studio/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Agency</span></div>
+              <div class="pf-body"><span class="pf-num">15</span><h3>Frame</h3><p>Moving Images That Move People.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/18-aurum/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:15">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/18-aurum/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Finance</span></div>
+              <div class="pf-body"><span class="pf-num">16</span><h3>Aurum</h3><p>Grow Wealth, The Calm Way.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/artisan-bakery/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:16">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/artisan-bakery/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">F&amp;B</span></div>
+              <div class="pf-body"><span class="pf-num">17</span><h3>Artisan Bakery</h3><p>Sourdough, Viennoiserie &amp; Daily Fresh.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/coding-platform-cli/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:17">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/coding-platform-cli/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Tech</span></div>
+              <div class="pf-body"><span class="pf-num">18</span><h3>CodeCLI</h3><p>Terminal-Powered Development Platform.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/crimson-shoes/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:18">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/crimson-shoes/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Retail</span></div>
+              <div class="pf-body"><span class="pf-num">19</span><h3>CRIMSON</h3><p>Step Loud. Red Sneakers.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/developer-services-landing/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:19">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/developer-services-landing/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Tech</span></div>
+              <div class="pf-body"><span class="pf-num">20</span><h3>FORGE /dev</h3><p>Software Engineering Studio.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/gym-fitness/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:20">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/gym-fitness/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Fitness</span></div>
+              <div class="pf-body"><span class="pf-num">21</span><h3>FORGE Strength</h3><p>Strength &amp; Powerlifting.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/media-agency-landing/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:21">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/media-agency-landing/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Agency</span></div>
+              <div class="pf-body"><span class="pf-num">22</span><h3>MERIDIAN</h3><p>Media &amp; Content Studio.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/meridian-fitness/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:22">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/meridian-fitness/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Fitness</span></div>
+              <div class="pf-body"><span class="pf-num">23</span><h3>Meridian Fitness</h3><p>Reach Your Peak Performance.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/noma-real-estate/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:23">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/noma-real-estate/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Real Estate</span></div>
+              <div class="pf-body"><span class="pf-num">24</span><h3>Noma Real Estate</h3><p>Unlocking Your Dream Home &amp; Investment.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/outdoor-marketing/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:24">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/outdoor-marketing/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Agency</span></div>
+              <div class="pf-body"><span class="pf-num">25</span><h3>BLKOUT</h3><p>Outdoor Marketing That Demands Attention.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/saas-pulse-analytics/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:25">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/saas-pulse-analytics/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Tech</span></div>
+              <div class="pf-body"><span class="pf-num">26</span><h3>Pulse Analytics</h3><p>Turn Data Into Decisions.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/techvault-saas/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:26">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/techvault-saas/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Tech</span></div>
+              <div class="pf-body"><span class="pf-num">27</span><h3>TechVault</h3><p>Secure. Scale. Streamline.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+            <a href="/portfolio/verdant-botanics/" class="pf-link" target="_blank" rel="noopener noreferrer"><article class="pf-card reveal" style="--i:27">
+              <div class="pf-preview"><iframe loading="lazy" src="/portfolio/verdant-botanics/" scrolling="no" tabindex="-1" aria-hidden="true"></iframe><div class="pf-shade"></div><span class="pf-tag">Beauty</span></div>
+              <div class="pf-body"><span class="pf-num">28</span><h3>Verdant Botanics</h3><p>Small-Batch Botanical Skincare &amp; Wellness.</p><span class="pf-view">View page →</span></div>
+            </article></a>
+
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <button class="page-btn" id="prevPage">← Prev</button>
+            <span class="page-info" id="pageInfo">Page <b>1</b> of <b>3</b></span>
+            <button class="page-btn" id="nextPage">Next →</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+
+    <!-- ============ TAB: APPS ============ -->
+    <div class="tab-panel" id="panel-apps" style="display:none">
+      <section class="services" style="padding-top:0;padding-bottom:100px">
+        <div class="wrap">
+          <div class="cards">
+            <article class="card reveal" style="--i:0">
+              <span class="card-num">A—01</span>
+              <h3>SimpleAIFolio</h3>
+              <p>Open-source portfolio and blog platform with a built-in AI writing assistant. Designed for developers, marketers, and creators who want a fast, customizable personal site with integrated content management — no headless CMS complexity required.</p>
+              <ul class="card-tags"><li>Next.js</li><li>React</li><li>TypeScript</li><li>PostgreSQL</li></ul>
+              <div class="app-links">
+                <a href="https://bit2byte.app/">Live →</a>
+                <a href="https://github.com/asharma02192/SimpleAIFolio">GitHub →</a>
+              </div>
+            </article>
+            <article class="card reveal" style="--i:1">
+              <span class="card-num">A—02</span>
+              <h3>OpsConsole</h3>
+              <p>A workspace-first desktop app for developers who live in the terminal — saved commands, embedded shells (real PowerShell &amp; CMD via native PTY), local project context, optional AI assistant, and offline backups. 100% local: no cloud, no accounts, no telemetry.</p>
+              <ul class="card-tags"><li>React 19</li><li>Tauri</li><li>TypeScript</li><li>SQLite</li></ul>
+              <div class="app-links">
+                <a href="https://github.com/asharma02192/OpsConsole/releases">Download →</a>
+                <a href="https://github.com/asharma02192/OpsConsole">GitHub →</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <svg viewBox="0 0 32 32" class="logo-mark" aria-hidden="true">
+            <path d="M4 28 L16 4 L28 28" /><path d="M9 28 L16 14 L23 28" /><circle cx="16" cy="28" r="2" class="logo-dot" />
+          </svg>
+          <span class="logo-text">Amit<span>/build</span></span>
+        </a>
+        <p>Independent engineer &amp; growth builder. I build, ship and scale.</p>
+        <p class="footer-loc">Remote · India</p>
+      </div>
+      <nav class="footer-col" aria-label="Explore">
+        <h4>explore</h4>
+        <a href="/#principles">Principles</a><a href="/#process">Process</a><a href="/#stack">Stack</a><a href="/portfolio" class="nav-highlight">Projects</a><a href="/blog" class="nav-highlight">Blog</a>
+      </nav>
+      <nav class="footer-col" aria-label="Connect">
+        <h4>connect</h4>
+        <a href="https://github.com/asharma02192">GitHub</a><a href="https://www.linkedin.com/in/bit2byte/">LinkedIn</a><a href="https://x.com/bit2byteapp">X / Twitter</a><a href="https://substack.com/@bit2byteapp">Substack</a>
+      </nav>
+      <div class="footer-col">
+        <h4>uptime</h4>
+        <p class="status-ok"><i></i> All systems operational</p>
+        <p class="clock" id="clock">--:--:--</p>
+        <p class="clock-loc">IST</p>
+      </div>
+    </div>
+    <div class="wrap footer-base">
+      <span>© <span id="year"></span> Amit Sharma. Built with intent.</span>
+      <span>commit: <code>a1b2c3d</code> · main</span>
+    </div>
+  </footer>
+
+  <script src="/landing-assets/script.js"></script>
+  <script>
+    /* ---- Tab switching ---- */
+    document.querySelectorAll('.tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var target = this.dataset.tab;
+        document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+        this.classList.add('active');
+        document.querySelectorAll('.tab-panel').forEach(function(p) { p.style.display = 'none'; });
+        document.getElementById('panel-' + target).style.display = '';
+        if (target === 'web') {
+          requestAnimationFrame(function() { scaleIframes(); });
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    /* ---- Pagination (10 per page) ---- */
+    var PER_PAGE = 9;
+    var cards = document.querySelectorAll('#web-grid .pf-link');
+    var totalPages = Math.ceil(cards.length / PER_PAGE);
+    var currentPage = 1;
+
+    function showPage(page) {
+      currentPage = page;
+      var start = (page - 1) * PER_PAGE;
+      var end = start + PER_PAGE;
+      cards.forEach(function(card, i) {
+        card.style.display = (i >= start && i < end) ? '' : 'none';
+      });
+      document.getElementById('pageInfo').innerHTML = 'Page <b>' + page + '</b> of <b>' + totalPages + '</b>';
+      document.getElementById('prevPage').disabled = (page <= 1);
+      document.getElementById('nextPage').disabled = (page >= totalPages);
+      requestAnimationFrame(function() { scaleIframes(); });
+    }
+
+    document.getElementById('prevPage').addEventListener('click', function() {
+      if (currentPage > 1) showPage(currentPage - 1);
+    });
+    document.getElementById('nextPage').addEventListener('click', function() {
+      if (currentPage < totalPages) showPage(currentPage + 1);
+    });
+
+    /* ---- Iframe scaling (same technique as bit2byte.tech) ---- */
+    function scaleIframes() {
+      document.querySelectorAll('.pf-preview').forEach(function(box) {
+        var iframe = box.querySelector('iframe');
+        if (!iframe) return;
+        var w = box.clientWidth;
+        if (w === 0) return;
+        var scale = w / 1280;
+        iframe.style.transform = 'scale(' + scale + ')';
+        iframe.style.height = (box.clientHeight / scale) + 'px';
+      });
+    }
+
+    /* ---- Init ---- */
+    showPage(1);
+    requestAnimationFrame(scaleIframes);
+    window.addEventListener('load', scaleIframes);
+    var resizeRaf = null;
+    window.addEventListener('resize', function() {
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(scaleIframes);
+    });
+    document.querySelectorAll('.pf-preview iframe').forEach(function(f) {
+      f.addEventListener('load', scaleIframes);
+    });
+  </script>
+</body>
+</html>

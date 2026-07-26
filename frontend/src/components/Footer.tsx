@@ -26,7 +26,7 @@ export default function Footer({
           <div className="md:col-span-5">
             <div className="flex items-center gap-2 mb-[var(--space-4)]">
               <span
-                className="inline-flex items-center justify-center w-7 h-7 text-[var(--text-xs)] font-700"
+                className="inline-flex items-center justify-center w-7 h-7 text-[var(--text-xs)] font-bold"
                 style={{
                   background: "var(--color-accent)",
                   color: "var(--color-accent-on)",
@@ -36,7 +36,7 @@ export default function Footer({
                 {brandLetter}
               </span>
               <span
-                className="font-[family-name:var(--font-display)] text-[1.125rem] font-700"
+                className="font-[family-name:var(--font-display)] text-[1.125rem] font-bold"
                 style={{ color: "var(--footer-heading)" }}
               >
                 {siteConfig.title}
@@ -52,7 +52,7 @@ export default function Footer({
 
           <div className="md:col-span-3">
             <p
-              className="font-[family-name:var(--font-display)] text-[var(--text-xs)] font-700 uppercase tracking-widest mb-[var(--space-4)]"
+              className="font-[family-name:var(--font-display)] text-[var(--text-xs)] font-bold uppercase tracking-widest mb-[var(--space-4)]"
               style={{ color: "var(--footer-muted)" }}
             >
               Pages
@@ -76,7 +76,7 @@ export default function Footer({
 
           <div className="md:col-span-4">
             <p
-              className="font-[family-name:var(--font-display)] text-[var(--text-xs)] font-700 uppercase tracking-widest mb-[var(--space-4)]"
+              className="font-[family-name:var(--font-display)] text-[var(--text-xs)] font-bold uppercase tracking-widest mb-[var(--space-4)]"
               style={{ color: "var(--footer-muted)" }}
             >
               Newsletter
@@ -92,7 +92,7 @@ export default function Footer({
             {socials.length > 0 && (
               <div className="mt-[var(--space-5)]">
                 <p
-                  className="font-[family-name:var(--font-display)] text-[var(--text-xs)] font-700 uppercase tracking-widest mb-[var(--space-3)]"
+                  className="font-[family-name:var(--font-display)] text-[var(--text-xs)] font-bold uppercase tracking-widest mb-[var(--space-3)]"
                   style={{ color: "var(--footer-muted)" }}
                 >
                   Connect

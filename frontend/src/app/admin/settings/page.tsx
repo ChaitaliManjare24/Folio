@@ -405,7 +405,7 @@ function SettingsContent() {
           <button
             onClick={save}
             disabled={saving || loading}
-            className="inline-flex min-h-[40px] items-center justify-center self-start rounded-[var(--radius-md)] px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+            className="inline-flex min-h-[40px] items-center justify-center self-start rounded-[var(--radius-md)] px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
             style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
           >
             {saving ? "Saving..." : "Save All"}
@@ -432,7 +432,7 @@ function SettingsContent() {
                   <button
                     key={section.id}
                     onClick={() => setActiveSection(section.id)}
-                    className="flex-1 rounded-[var(--radius-md)] px-[var(--space-4)] py-[var(--space-3)] text-center font-[family-name:var(--font-display)] text-[var(--text-sm)] font-600 transition-all duration-150 whitespace-nowrap"
+                    className="flex-1 rounded-[var(--radius-md)] px-[var(--space-4)] py-[var(--space-3)] text-center font-[family-name:var(--font-display)] text-[var(--text-sm)] font-semibold transition-all duration-150 whitespace-nowrap"
                     style={{
                       background: active ? "var(--color-accent)" : "transparent",
                       color: active ? "var(--color-accent-on)" : "var(--color-text-secondary)",
@@ -451,7 +451,7 @@ function SettingsContent() {
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Home Page</p>
-                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                         Hero Section
                       </h2>
                       <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -480,7 +480,7 @@ function SettingsContent() {
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Home Page</p>
-                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                         Skills Section
                       </h2>
                       <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -515,7 +515,7 @@ function SettingsContent() {
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>About Page</p>
-                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                         Bio Paragraphs
                       </h2>
                       <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -531,10 +531,10 @@ function SettingsContent() {
 
                   <div className="flex flex-col gap-[var(--space-3)] rounded-[var(--radius-lg)] p-[var(--space-5)] sm:flex-row sm:items-center sm:justify-between" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div>
-                      <p className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-600" style={{ color: "var(--color-text)" }}>Experience Timeline</p>
+                      <p className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-semibold" style={{ color: "var(--color-text)" }}>Experience Timeline</p>
                       <p className="font-[family-name:var(--font-body)] text-[var(--text-xs)]" style={{ color: "var(--color-text-tertiary)" }}>Experience timeline entries are managed separately.</p>
                     </div>
-                    <a href="/admin/experience" className="inline-flex min-h-[36px] items-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-colors" style={{ color: "var(--color-accent)", border: "1px solid var(--color-accent)" }}>Go to Experience Editor &rarr;</a>
+                    <a href="/admin/experience" className="inline-flex min-h-[36px] items-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-colors" style={{ color: "var(--color-accent)", border: "1px solid var(--color-accent)" }}>Go to Experience Editor &rarr;</a>
                   </div>
                 </>
               )}
@@ -549,7 +549,7 @@ function SettingsContent() {
                       <button
                         key={tab.id}
                         onClick={() => setActiveSiteSubTab(tab.id)}
-                        className="rounded-[var(--radius-md)] px-[var(--space-4)] py-[var(--space-2)] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150"
+                        className="rounded-[var(--radius-md)] px-[var(--space-4)] py-[var(--space-2)] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150"
                         style={{
                           background: active ? "var(--color-accent)" : "var(--color-bg-elevated)",
                           border: `1px solid ${active ? "var(--color-accent)" : "var(--color-border)"}`,
@@ -567,7 +567,7 @@ function SettingsContent() {
                    <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                      <div className="mb-[var(--space-5)]">
                        <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Appearance</p>
-                       <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                       <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                          Theme
                        </h2>
                        <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -603,7 +603,7 @@ function SettingsContent() {
                               >
                                 {selected ? "✓" : ""}
                               </div>
-                              <span className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-700" style={{ color: "var(--color-text)" }}>
+                              <span className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-bold" style={{ color: "var(--color-text)" }}>
                                 {t.name}
                               </span>
                             </div>
@@ -619,7 +619,7 @@ function SettingsContent() {
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Site Wide</p>
-                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                         Site Info
                       </h2>
                       <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -643,7 +643,7 @@ function SettingsContent() {
                    <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Site Wide</p>
-                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                         Social Links
                       </h2>
                       <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -705,7 +705,7 @@ function SettingsContent() {
                             setNewSocialName("");
                             setAddingSocial(false);
                           }}
-                          className="px-3 py-[var(--space-2)] rounded-[var(--radius-md)] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-colors"
+                          className="px-3 py-[var(--space-2)] rounded-[var(--radius-md)] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-colors"
                           style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                         >
                           Add
@@ -715,7 +715,7 @@ function SettingsContent() {
                             setNewSocialName("");
                             setAddingSocial(false);
                           }}
-                          className="px-3 py-[var(--space-2)] rounded-[var(--radius-md)] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-colors"
+                          className="px-3 py-[var(--space-2)] rounded-[var(--radius-md)] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-colors"
                           style={{ background: "var(--color-bg)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                         >
                           Cancel
@@ -724,7 +724,7 @@ function SettingsContent() {
                     ) : (
                       <button
                         onClick={() => setAddingSocial(true)}
-                        className="mt-[var(--space-4)] inline-flex items-center gap-1 px-3 py-[var(--space-2)] rounded-[var(--radius-md)] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-colors"
+                        className="mt-[var(--space-4)] inline-flex items-center gap-1 px-3 py-[var(--space-2)] rounded-[var(--radius-md)] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-colors"
                         style={{ background: "var(--color-bg)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                       >
                         + Add Social Link
@@ -735,7 +735,7 @@ function SettingsContent() {
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Site Wide</p>
-                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                         Announcement Bar
                       </h2>
                       <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -750,7 +750,7 @@ function SettingsContent() {
                           onChange={(e) => set("announcement", { ...(settings.announcement || { text: "", link: "" }), enabled: e.target.checked })}
                           className="h-4 w-4"
                         />
-                        <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500" style={{ color: "var(--color-text)" }}>
+                        <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium" style={{ color: "var(--color-text)" }}>
                           Show announcement bar
                         </span>
                       </label>
@@ -758,7 +758,7 @@ function SettingsContent() {
                       <div><label className={labelClass} style={{ color: "var(--color-text-tertiary)" }}>Link URL (optional)</label><input value={settings.announcement?.link || ""} onChange={(e) => set("announcement", { ...(settings.announcement || { text: "", enabled: false }), link: e.target.value })} placeholder="https://example.com/webinar" className="w-full px-[var(--space-3)] py-[var(--space-2)] text-[var(--text-sm)] outline-none focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors" style={inputStyle} /></div>
                       {settings.announcement?.enabled && settings.announcement?.text ? (
                         <div className="rounded-[var(--radius-md)] p-[var(--space-3)] text-center" style={{ background: "#1a1a1a", color: "#f5f5f5" }}>
-                          <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500">{settings.announcement.text}</span>
+                          <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium">{settings.announcement.text}</span>
                         </div>
                       ) : null}
                     </div>
@@ -772,7 +772,7 @@ function SettingsContent() {
                     <div className="mb-[var(--space-5)] flex flex-col gap-[var(--space-3)] sm:flex-row sm:items-center sm:justify-between">
                       <div>
                         <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>AI Writer</p>
-                        <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                        <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                           AI Configuration
                         </h2>
                         <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -782,7 +782,7 @@ function SettingsContent() {
                       <button
                         onClick={saveAiConfig}
                         disabled={aiSaving}
-                        className="inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:opacity-50 whitespace-nowrap self-start sm:self-auto"
+                        className="inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:opacity-50 whitespace-nowrap self-start sm:self-auto"
                         style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                       >
                         {aiSaving ? "Saving..." : "Save AI Config"}
@@ -932,7 +932,7 @@ function SettingsContent() {
                     <div className="mb-[var(--space-5)] flex flex-col gap-[var(--space-3)] sm:flex-row sm:items-center sm:justify-between">
                       <div>
                         <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>AI Writer</p>
-                        <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                        <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                           Writing Profile &amp; Quality Standards
                         </h2>
                         <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -942,7 +942,7 @@ function SettingsContent() {
                       <button
                         onClick={saveWritingProfile}
                         disabled={writingProfileSaving || !writingProfile}
-                        className="inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:opacity-50 whitespace-nowrap self-start sm:self-auto"
+                        className="inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:opacity-50 whitespace-nowrap self-start sm:self-auto"
                         style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                       >
                         {writingProfileSaving ? "Saving..." : "Save Profile"}
@@ -1028,7 +1028,7 @@ function SettingsContent() {
                     <div className="mb-[var(--space-5)] flex flex-col gap-[var(--space-3)] sm:flex-row sm:items-center sm:justify-between">
                       <div>
                         <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Integrations</p>
-                        <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                        <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                           MCP Server
                         </h2>
                         <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -1038,7 +1038,7 @@ function SettingsContent() {
                       <button
                         onClick={regenerateMcpKey}
                         disabled={mcpRegenerating || !mcpConfig}
-                        className="inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:opacity-50 whitespace-nowrap self-start sm:self-auto"
+                        className="inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:opacity-50 whitespace-nowrap self-start sm:self-auto"
                         style={{ background: "var(--color-bg)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                       >
                         {mcpRegenerating ? "Regenerating..." : "Regenerate Key"}
@@ -1056,7 +1056,7 @@ function SettingsContent() {
                             </code>
                             <button
                               onClick={() => copyToClipboard(mcpConfig.apiKey, "key")}
-                              className="px-3 py-[var(--space-2)] rounded-[var(--radius-md)] font-[family-name:var(--font-body)] text-[var(--text-xs)] font-500 transition-colors"
+                              className="px-3 py-[var(--space-2)] rounded-[var(--radius-md)] font-[family-name:var(--font-body)] text-[var(--text-xs)] font-medium transition-colors"
                               style={{ background: "var(--color-bg)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                             >
                               {mcpCopied === "key" ? "Copied!" : "Copy"}
@@ -1081,10 +1081,10 @@ function SettingsContent() {
                           <div className="flex flex-col gap-[var(--space-3)]">
                             <div className="rounded-[var(--radius-md)] p-[var(--space-3)]" style={{ background: "var(--color-bg)", border: "1px solid var(--color-border)" }}>
                               <div className="flex items-center justify-between mb-[var(--space-2)]">
-                                <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-600" style={{ color: "var(--color-text)" }}>Cursor / Windsurf / ChatGPT</span>
+                                <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-semibold" style={{ color: "var(--color-text)" }}>Cursor / Windsurf / ChatGPT</span>
                                 <button
                                   onClick={() => copyToClipboard(mcpConfig.mcpUrl, "cursor")}
-                                  className="text-[var(--text-xs)] font-500 transition-colors"
+                                  className="text-[var(--text-xs)] font-medium transition-colors"
                                   style={{ color: "var(--color-accent)" }}
                                 >
                                   {mcpCopied === "cursor" ? "Copied!" : "Copy URL"}
@@ -1118,7 +1118,7 @@ function SettingsContent() {
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Account</p>
-                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                         Profile
                       </h2>
                       <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
@@ -1137,7 +1137,7 @@ function SettingsContent() {
                       <button
                         onClick={saveProfile}
                         disabled={profileSaving || !profileForm.name || !profileForm.email}
-                        className="inline-flex min-h-[40px] items-center justify-center self-start rounded-[var(--radius-md)] px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="inline-flex min-h-[40px] items-center justify-center self-start rounded-[var(--radius-md)] px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                         style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                       >
                         {profileSaving ? "Saving..." : "Save Profile"}
@@ -1148,7 +1148,7 @@ function SettingsContent() {
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Account</p>
-                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>
+                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
                         Change Password
                       </h2>
                     </div>
@@ -1168,7 +1168,7 @@ function SettingsContent() {
                       <button
                         onClick={changePassword}
                         disabled={pwSaving || !pwForm.currentPassword || !pwForm.newPassword || !pwForm.confirmPassword}
-                        className="inline-flex min-h-[40px] items-center justify-center self-start rounded-[var(--radius-md)] px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="inline-flex min-h-[40px] items-center justify-center self-start rounded-[var(--radius-md)] px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                         style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                       >
                         {pwSaving ? "Changing..." : "Change Password"}

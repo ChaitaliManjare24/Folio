@@ -11,7 +11,7 @@ export interface AnnouncementSettings {
   enabled: boolean;
 }
 
-export type ThemeName = "light-minimal" | "dark-modern" | "mono-editorial";
+export type ThemeName = "light-minimal" | "dark-modern" | "mono-editorial" | "forge-tech";
 
 export interface PublicSettings {
   siteConfig: SiteConfig;
@@ -196,7 +196,7 @@ function parseAnnouncement(value: unknown): AnnouncementSettings {
 
 function buildSettings(data: JsonRecord): PublicSettings {
   const rawTheme = data.theme as string;
-  const validThemes: ThemeName[] = ["light-minimal", "dark-modern", "mono-editorial"];
+  const validThemes: ThemeName[] = ["light-minimal", "dark-modern", "mono-editorial", "forge-tech"];
   const theme: ThemeName = validThemes.includes(rawTheme as ThemeName) ? (rawTheme as ThemeName) : "light-minimal";
 
   return {
@@ -250,7 +250,7 @@ export async function fetchAllPublishedPosts() {
   do {
     const response = await serverFetch<PaginatedResponse<Post>>(
       `/api/posts?perPage=50&page=${page}`,
-      { next: { revalidate: PUBLIC_REVALIDATE_SECONDS } }
+      { cache: "no-store" }
     );
     posts.push(...response.data);
     totalPages = response.totalPages;

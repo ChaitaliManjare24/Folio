@@ -93,7 +93,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={sending}
-        className="self-start font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-6 py-2.5 transition-all hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="self-start font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-6 py-2.5 transition-all hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)" }}
       >
         {sending ? "Sending..." : "Send Message"}

@@ -97,7 +97,7 @@ export function UIProvider({ children }: { children: ReactNode }) {
               </button>
               <button
                 onClick={() => handleConfirm(true)}
-                className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-[var(--space-4)] py-[var(--space-2)]"
+                className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-[var(--space-4)] py-[var(--space-2)]"
                 style={{ background: "oklch(55% 0.15 25)", color: "oklch(98% 0 0)", borderRadius: "var(--radius-md)" }}
               >
                 Delete

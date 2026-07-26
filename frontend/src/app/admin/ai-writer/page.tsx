@@ -769,7 +769,7 @@ function WriterContent() {
               <button
                 type="button"
                 onClick={() => setMobileSidebarOpen((prev) => !prev)}
-                className="inline-flex min-h-[40px] items-center justify-center gap-[var(--space-2)] rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-500 transition-colors"
+                className="inline-flex min-h-[40px] items-center justify-center gap-[var(--space-2)] rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-medium transition-colors"
                 style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
               >
                 ☰ {listTotal > 0 ? `${listTotal}` : ""}
@@ -895,7 +895,7 @@ function WriterContent() {
                       type="button"
                       onClick={() => { createConversation(); setMobileSidebarOpen(false); }}
                       disabled={busy !== null || !topicInput.trim()}
-                      className="mt-[var(--space-2)] inline-flex min-h-[36px] w-full items-center justify-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="mt-[var(--space-2)] inline-flex min-h-[36px] w-full items-center justify-center rounded-[var(--radius-md)] px-4 py-2 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                       style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                     >
                       {busy === "create" ? "Starting..." : "New AI Blog"}
@@ -951,7 +951,7 @@ function WriterContent() {
                               onClick={() => { setSelectedId(conversation.id); setMobileSidebarOpen(false); }}
                               className="w-full text-left"
                             >
-                              <span className="line-clamp-1 block text-[var(--text-sm)] font-500" style={{ color: "var(--color-text)" }}>{conversation.title}</span>
+                              <span className="line-clamp-1 block text-[var(--text-sm)] font-medium" style={{ color: "var(--color-text)" }}>{conversation.title}</span>
                               <span className="mt-[2px] block font-[family-name:var(--font-mono)] text-[0.625rem]" style={{ color: "var(--color-text-tertiary)" }}>
                                 {formatTimestamp(conversation.updatedAt)} · {conversation.status.replace(/_/g, " ")}
                               </span>
@@ -1084,7 +1084,7 @@ function WriterContent() {
                             type="button"
                             onClick={() => void refreshFromEndpoint(`/api/admin/ai/conversations/${detail.id}/message`, "POST", { message: messageInput })}
                             disabled={busy !== null || !messageInput.trim()}
-                            className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-500 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                            className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                             style={{ background: "var(--color-bg)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                           >
                             {busy === "message" ? "Sending..." : "Send Message"}
@@ -1093,7 +1093,7 @@ function WriterContent() {
                             type="button"
                             onClick={() => void refreshFromEndpoint(`/api/admin/ai/conversations/${detail.id}/brief`, "POST")}
                             disabled={busy !== null}
-                            className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                             style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                           >
                             {busy === "brief" ? "Generating..." : "Generate Brief"}
@@ -1140,7 +1140,7 @@ function WriterContent() {
                           type="button"
                           onClick={() => void createConversation()}
                           disabled={busy !== null || !topicInput.trim()}
-                          className="inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] px-6 py-3 text-[var(--text-base)] font-600 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                          className="inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] px-6 py-3 text-[var(--text-base)] font-semibold transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                           style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                         >
                           {busy === "create" ? "Starting..." : "Generate Blog Post →"}
@@ -1191,7 +1191,7 @@ function WriterContent() {
                           type="button"
                           onClick={() => void refreshFromEndpoint(`/api/admin/ai/conversations/${detail.id}/brief`, "PUT", { ...briefForm, secondaryKeywords: briefForm.secondaryKeywords, approved: true })}
                           disabled={busy !== null}
-                          className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                          className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                           style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                         >
                           {busy === "approve" ? "Approving..." : briefApproved ? "Update Approved Brief" : "Approve Brief & Generate Draft"}
@@ -1201,7 +1201,7 @@ function WriterContent() {
                             type="button"
                             onClick={() => void refreshFromEndpoint(`/api/admin/ai/conversations/${detail.id}/draft`, "POST")}
                             disabled={busy !== null}
-                            className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-500 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                            className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                             style={{ background: "var(--color-bg)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                           >
                             {busy === "draft" ? "Generating..." : "Generate Draft"}
@@ -1365,7 +1365,7 @@ function WriterContent() {
                                 type="button"
                                 onClick={() => void refreshFromEndpoint(`/api/admin/ai/conversations/${detail.id}/research`, "POST")}
                                 disabled={busy !== null || !detail.researchEnabled}
-                                className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-500 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                                className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                                 style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                               >
                                 {busy === "research" ? "Researching..." : "Start Research"}
@@ -1519,7 +1519,7 @@ function WriterContent() {
                                         type="button"
                                         onClick={() => void saveSourceReview()}
                                         disabled={busy !== null || sourceForm.length === 0}
-                                        className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                                        className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                                         style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                                       >
                                         {busy === "research" ? "Saving..." : "Save Source Review"}
@@ -1563,7 +1563,7 @@ function WriterContent() {
                           type="button"
                           onClick={() => void refreshFromEndpoint(`/api/admin/ai/conversations/${detail.id}/draft`, "POST")}
                           disabled={busy !== null || !briefApproved}
-                          className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                          className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                           style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                         >
                           {busy === "draft" ? "Generating..." : "Generate Draft"}
@@ -1576,7 +1576,7 @@ function WriterContent() {
                           {/* ── Panel: Draft Overview ── */}
                           <div className="rounded-[var(--radius-md)] px-[var(--space-5)] py-[var(--space-4)]" style={panelInsetStyle}>
                             <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-widest" style={{ color: "var(--color-text-tertiary)" }}>Draft Overview</p>
-                            <h3 className="mt-[var(--space-2)] font-[family-name:var(--font-display)] text-[var(--text-lg)] font-600" style={{ color: "var(--color-text)" }}>{draft.title}</h3>
+                            <h3 className="mt-[var(--space-2)] font-[family-name:var(--font-display)] text-[var(--text-lg)] font-semibold" style={{ color: "var(--color-text)" }}>{draft.title}</h3>
                             <p className="mt-[var(--space-1)] break-all text-[var(--text-xs)]" style={{ color: "var(--color-text-tertiary)" }}>{draft.slug}</p>
                             <div className="mt-[var(--space-3)] flex flex-wrap items-center gap-[var(--space-2)]">
                               {[
@@ -1694,7 +1694,7 @@ function WriterContent() {
                                     type="button"
                                     onClick={() => void updateVerificationFlags()}
                                     disabled={busy !== null}
-                                    className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                                     style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                                   >
                                     {busy === "reviewFlags" ? "Saving..." : "Save Verification Review"}
@@ -1731,13 +1731,13 @@ function WriterContent() {
                                       </p>
                                       <p className="mt-[var(--space-2)] text-[var(--text-sm)]" style={{ color: "var(--color-text-secondary)" }}>{link.reason}</p>
                                       {applied ? (
-                                        <p className="mt-[var(--space-3)] text-[var(--text-xs)] font-500" style={{ color: "var(--color-accent)" }}>Applied</p>
+                                        <p className="mt-[var(--space-3)] text-[var(--text-xs)] font-medium" style={{ color: "var(--color-accent)" }}>Applied</p>
                                       ) : (
                                         <button
                                           type="button"
                                           onClick={() => void applyInternalLinkSuggestion(linkIndex)}
                                           disabled={busy !== null}
-                                          className="mt-[var(--space-3)] inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-md)] px-3 py-2 text-[var(--text-xs)] font-500 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                                          className="mt-[var(--space-3)] inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-md)] px-3 py-2 text-[var(--text-xs)] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                                           style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                                         >
                                           {busy === "internalLink" ? "Applying..." : "Apply Link"}
@@ -1805,7 +1805,7 @@ function WriterContent() {
                                       type="button"
                                       onClick={() => void requestRewrite(ra.action)}
                                       disabled={busy !== null}
-                                      className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-500 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                                      className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                                       style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                                     >
                                       {busy === "rewrite" ? "Working..." : ra.label}
@@ -1850,7 +1850,7 @@ function WriterContent() {
                                         type="button"
                                         onClick={() => void applyRewrite()}
                                         disabled={busy !== null || rewriteProposal.status !== "proposed"}
-                                        className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                                        className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                                         style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                                       >
                                         {busy === "applyRewrite" ? "Applying..." : "Apply Rewrite"}
@@ -1860,7 +1860,7 @@ function WriterContent() {
                                           type="button"
                                           onClick={() => void rejectRewrite(rewriteProposal.id!)}
                                           disabled={busy !== null || rewriteProposal.status !== "proposed"}
-                                          className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-500 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                                          className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                                           style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                                         >
                                           Reject
@@ -1870,7 +1870,7 @@ function WriterContent() {
                                         type="button"
                                         onClick={() => setRewriteProposal(null)}
                                         disabled={busy !== null}
-                                        className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-500 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                                        className="inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-4 py-2 text-[var(--text-sm)] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                                         style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text)" }}
                                       >
                                         Dismiss
@@ -1911,7 +1911,7 @@ function WriterContent() {
                             type="button"
                             onClick={() => void refreshFromEndpoint(`/api/admin/ai/conversations/${detail.id}/save-draft`, "POST", { includeReferences })}
                             disabled={busy !== null}
-                            className="inline-flex min-h-[40px] w-full items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="inline-flex min-h-[40px] w-full items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                             style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
                           >
                             {busy === "save" ? "Saving..." : detail.draft?.postId ? "Update CMS Draft" : "Save as CMS Draft"}

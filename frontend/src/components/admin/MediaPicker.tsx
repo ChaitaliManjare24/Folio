@@ -160,7 +160,7 @@ export default function MediaPicker({ open, onClose, onSelect }: MediaPickerProp
           <button
             onClick={handleSelect}
             disabled={!selected}
-            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-all duration-150 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-all duration-150 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}
           >
             Select

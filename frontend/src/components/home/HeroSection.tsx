@@ -16,10 +16,10 @@ export default function HeroSection({
 
         <div className="grid grid-cols-12 gap-x-[var(--space-8)] gap-y-[var(--space-8)] items-start">
           <div className="col-span-12 lg:col-span-8">
-            <h1 className="font-[family-name:var(--font-display)] font-800 leading-[var(--leading-tight)] mb-[var(--space-6)]" style={{ fontSize: "clamp(2.75rem, 7vw, 4.5rem)", color: "var(--color-text)", letterSpacing: "-0.03em" }}>
+            <h1 className="font-[family-name:var(--font-display)] font-extrabold leading-[var(--leading-tight)] mb-[var(--space-6)]" style={{ fontSize: "clamp(2.75rem, 7vw, 4.5rem)", color: "var(--color-text)", letterSpacing: "-0.03em" }}>
               {cfg.authorName}
             </h1>
-            <p className="font-[family-name:var(--font-body)] text-[var(--text-lg)] md:text-[var(--text-xl)] font-400 leading-[1.4] max-w-[38rem]" style={{ color: "var(--color-text-secondary)" }}>
+            <p className="font-[family-name:var(--font-body)] text-[var(--text-lg)] md:text-[var(--text-xl)] font-normal leading-[1.4] max-w-[38rem]" style={{ color: "var(--color-text-secondary)" }}>
               {cfg.tagline}
             </p>
 
@@ -27,7 +27,7 @@ export default function HeroSection({
               <div className="flex flex-wrap gap-x-[var(--space-12)] gap-y-[var(--space-6)] mt-[var(--space-12)]">
                 {heroStats.map((stat) => (
                   <div key={stat.label} className="min-w-[5rem]">
-                    <span className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700 block" style={{ color: "var(--color-accent)" }}>{stat.value}</span>
+                    <span className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold block" style={{ color: "var(--color-accent)" }}>{stat.value}</span>
                     <span className="font-[family-name:var(--font-body)] text-[var(--text-xs)] mt-[var(--space-1)] block" style={{ color: "var(--color-text-tertiary)" }}>{stat.label}</span>
                   </div>
                 ))}
@@ -48,7 +48,7 @@ export default function HeroSection({
                     key={name}
                     href={name === "email" ? `mailto:${url}` : url}
                     {...(name !== "email" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 flex items-center gap-[var(--space-2)] transition-colors hover:text-[var(--color-accent)]"
+                    className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium flex items-center gap-[var(--space-2)] transition-colors hover:text-[var(--color-accent)]"
                     style={{ color: "var(--color-text-secondary)" }}
                   >
                     <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "var(--color-accent)" }} /> {name.charAt(0).toUpperCase() + name.slice(1)}

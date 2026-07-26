@@ -177,7 +177,7 @@ function ProjectsContent() {
           {!creating && !editing && (
             <button
               onClick={startCreate}
-              className="inline-flex min-h-[40px] items-center justify-center self-start px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 sm:self-auto"
+              className="inline-flex min-h-[40px] items-center justify-center self-start px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 sm:self-auto"
               style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}
             >
               + New Project
@@ -187,7 +187,7 @@ function ProjectsContent() {
 
         {(creating || editing) && (
           <div className="mb-[var(--space-8)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-lg)" }}>
-            <h2 className="font-[family-name:var(--font-display)] text-[var(--text-base)] font-600 mb-[var(--space-4)]" style={{ color: "var(--color-text)" }}>
+            <h2 className="font-[family-name:var(--font-display)] text-[var(--text-base)] font-semibold mb-[var(--space-4)]" style={{ color: "var(--color-text)" }}>
               {editing ? "Edit Project" : "New Project"}
             </h2>
             <div className="flex flex-col gap-[var(--space-4)]">
@@ -233,10 +233,10 @@ function ProjectsContent() {
                 </p>
               )}
               <div className="mt-[var(--space-2)] flex flex-wrap gap-[var(--space-3)]">
-                <button onClick={handleSave} disabled={saving || !form.title} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-all duration-150 cursor-pointer hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}>
+                <button onClick={handleSave} disabled={saving || !form.title} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-all duration-150 cursor-pointer hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}>
                   {saving ? "Saving..." : editing ? "Update" : "Create"}
                 </button>
-                <button onClick={cancel} disabled={saving} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-colors cursor-pointer hover:text-[var(--color-accent)] disabled:opacity-50 disabled:cursor-not-allowed" style={{ color: "var(--color-text-tertiary)", minHeight: "40px" }}>
+                <button onClick={cancel} disabled={saving} className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-colors cursor-pointer hover:text-[var(--color-accent)] disabled:opacity-50 disabled:cursor-not-allowed" style={{ color: "var(--color-text-tertiary)", minHeight: "40px" }}>
                   Cancel
                 </button>
               </div>
@@ -254,7 +254,7 @@ function ProjectsContent() {
               <div key={project.id} className="flex flex-col gap-[var(--space-3)] py-[var(--space-4)] sm:flex-row sm:items-center sm:justify-between" style={{ borderBottom: "1px solid var(--color-border)" }}>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-[var(--space-2)] sm:gap-[var(--space-3)]">
-                    <h3 className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-600" style={{ color: "var(--color-text)" }}>{project.title}</h3>
+                    <h3 className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-semibold" style={{ color: "var(--color-text)" }}>{project.title}</h3>
                     {project.featured && (
                       <span className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] px-[var(--space-2)] py-[0.125rem]" style={{ background: "var(--color-accent-lightest)", color: "var(--color-accent)", borderRadius: "var(--radius-sm)" }}>Featured</span>
                     )}

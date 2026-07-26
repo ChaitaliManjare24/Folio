@@ -94,7 +94,7 @@ function UsersContent() {
           </h1>
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="inline-flex min-h-[40px] items-center justify-center self-start px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 sm:self-auto"
+            className="inline-flex min-h-[40px] items-center justify-center self-start px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 sm:self-auto"
             style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)", minHeight: "40px" }}
           >
             {showAddForm ? "Cancel" : "Add User"}
@@ -103,7 +103,7 @@ function UsersContent() {
 
         {showAddForm && (
           <div className="mb-[var(--space-6)] rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
-            <h2 className="mb-[var(--space-4)] font-[family-name:var(--font-display)] text-[var(--text-lg)] font-700" style={{ color: "var(--color-text)" }}>New User</h2>
+            <h2 className="mb-[var(--space-4)] font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>New User</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-[var(--space-4)]">
               <div>
                 <label className={labelClass} style={{ color: "var(--color-text-tertiary)" }}>Name</label>
@@ -129,7 +129,7 @@ function UsersContent() {
             <button
               onClick={handleAdd}
               disabled={saving || !form.name || !form.email || !form.password}
-              className="mt-[var(--space-4)] inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+              className="mt-[var(--space-4)] inline-flex min-h-[40px] items-center justify-center rounded-[var(--radius-md)] px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
               style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}
             >
               {saving ? "Creating..." : "Create User"}
@@ -154,11 +154,11 @@ function UsersContent() {
             {users.map((u) => (
               <div key={u.id} className="flex flex-col gap-[var(--space-3)] rounded-[var(--radius-md)] p-[var(--space-4)] sm:flex-row sm:items-center sm:justify-between" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                 <div className="flex items-center gap-[var(--space-3)]">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--text-sm)] font-700" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}>
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--text-sm)] font-bold" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)" }}>
                     {u.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <p className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-600" style={{ color: "var(--color-text)" }}>{u.name}</p>
+                    <p className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-semibold" style={{ color: "var(--color-text)" }}>{u.name}</p>
                     <p className="font-[family-name:var(--font-mono)] text-[var(--text-xs)]" style={{ color: "var(--color-text-tertiary)" }}>{u.email}</p>
                   </div>
                 </div>

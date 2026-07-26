@@ -40,7 +40,7 @@ export default async function ProjectsSection() {
         <div className="max-w-[var(--max-width)] mx-auto px-[var(--space-6)] lg:px-[var(--space-12)]">
           <div className="section-label">Work</div>
           <h2
-            className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-700 mb-[var(--space-6)]"
+            className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-bold mb-[var(--space-6)]"
             style={{ letterSpacing: "-0.02em" }}
           >
             Selected Projects
@@ -68,7 +68,7 @@ export default async function ProjectsSection() {
           <div>
             <div className="section-label">Work</div>
             <h2
-              className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-700"
+              className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-bold"
               style={{ letterSpacing: "-0.02em" }}
             >
               Selected Projects
@@ -76,7 +76,7 @@ export default async function ProjectsSection() {
           </div>
           <Link
             href="/projects"
-            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-colors hover:text-[var(--color-accent)] hidden sm:block"
+            className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-colors hover:text-[var(--color-accent)] hidden sm:block"
             style={{ color: "var(--color-text-secondary)" }}
           >
             View all &rarr;
@@ -90,7 +90,7 @@ export default async function ProjectsSection() {
               {/* Number badge */}
               <div className="flex items-center justify-between mb-[var(--space-5)]">
                 <span
-                  className="font-[family-name:var(--font-display)] text-[var(--text-3xl)] font-800 leading-none"
+                  className="font-[family-name:var(--font-display)] text-[var(--text-3xl)] font-extrabold leading-none"
                   style={{ color: "var(--color-accent-lighter)" }}
                 >
                   {String(i + 1).padStart(2, "0")}
@@ -101,7 +101,7 @@ export default async function ProjectsSection() {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] font-500 transition-colors hover:text-[var(--color-accent)]"
+                      className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] font-medium transition-colors hover:text-[var(--color-accent)]"
                       style={{ color: "var(--color-text-tertiary)" }}
                     >
                       Live &rarr;
@@ -112,7 +112,7 @@ export default async function ProjectsSection() {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] font-500 transition-colors hover:text-[var(--color-accent)]"
+                      className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] font-medium transition-colors hover:text-[var(--color-accent)]"
                       style={{ color: "var(--color-text-tertiary)" }}
                     >
                       Source &rarr;
@@ -122,7 +122,7 @@ export default async function ProjectsSection() {
               </div>
 
               <h3
-                className="font-[family-name:var(--font-display)] text-[var(--text-xl)] font-700 mb-[var(--space-3)] group-hover:text-[var(--color-accent)] transition-colors"
+                className="font-[family-name:var(--font-display)] text-[var(--text-xl)] font-bold mb-[var(--space-3)] group-hover:text-[var(--color-accent)] transition-colors"
                 style={{ letterSpacing: "-0.015em" }}
               >
                 {project.title}

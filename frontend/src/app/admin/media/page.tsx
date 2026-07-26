@@ -235,7 +235,7 @@ function MediaContent() {
             {uploading ? "Please wait until the current upload finishes." : "Drag and drop, or click to browse"}
           </p>
           <label
-            className="inline-flex cursor-pointer items-center justify-center gap-[var(--space-2)] rounded-[var(--radius-md)] px-[var(--space-5)] py-[0.625rem] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 transition-all duration-150 hover:brightness-110"
+            className="inline-flex cursor-pointer items-center justify-center gap-[var(--space-2)] rounded-[var(--radius-md)] px-[var(--space-5)] py-[0.625rem] font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-all duration-150 hover:brightness-110"
             style={{
               background: "var(--color-accent)",
               color: "var(--color-accent-on)",

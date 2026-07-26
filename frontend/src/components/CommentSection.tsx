@@ -24,7 +24,7 @@ function CommentItem({ comment, onReply }: { comment: Comment; onReply: (id: str
   return (
     <div className="py-[var(--space-4)]" style={{ borderBottom: "1px solid var(--color-border)" }}>
       <div className="flex items-center gap-[var(--space-2)] mb-[var(--space-2)]">
-        <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-600" style={{ color: "var(--color-text)" }}>{comment.author}</span>
+        <span className="font-[family-name:var(--font-body)] text-[var(--text-sm)] font-semibold" style={{ color: "var(--color-text)" }}>{comment.author}</span>
         <span className="font-[family-name:var(--font-mono)] text-[var(--text-xs)]" style={{ color: "var(--color-text-tertiary)" }}>{formatDate(comment.createdAt)}</span>
       </div>
       <p className="font-[family-name:var(--font-body)] text-[var(--text-sm)] whitespace-pre-wrap mb-[var(--space-2)]" style={{ color: "var(--color-text-secondary)" }}>{comment.content}</p>
@@ -129,7 +129,7 @@ export default function CommentSection({ postId }: { postId: string }) {
           <button
             type="submit"
             disabled={submitting || !name.trim() || !message.trim()}
-            className="self-start font-[family-name:var(--font-body)] text-[var(--text-sm)] font-500 px-5 py-2.5 transition-all hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="self-start font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium px-5 py-2.5 transition-all hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)" }}
           >
             {submitting ? "Posting..." : "Post Comment"}

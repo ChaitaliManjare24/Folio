@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Onest, Fira_Code, Sora, Source_Sans_3 } from "next/font/google";
+import { Bricolage_Grotesque, Onest, Fira_Code, Sora, Source_Sans_3, Archivo, JetBrains_Mono } from "next/font/google";
 import { fetchSettings, serverFetch, getSiteUrl } from "@/lib/config";
 import "./globals.css";
 
@@ -43,6 +43,21 @@ const sourceSans3 = Source_Sans_3({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600"],
+});
+
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "700"],
+  style: ["normal", "italic"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -101,7 +116,7 @@ export default async function RootLayout({
     <html
       lang="en"
       data-theme={theme}
-      className={`${bricolage.variable} ${onest.variable} ${firaCode.variable} ${sora.variable} ${sourceSans3.variable} h-full antialiased`}
+      className={`${bricolage.variable} ${onest.variable} ${firaCode.variable} ${sora.variable} ${sourceSans3.variable} ${archivo.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {headSnippets.map((s) => (
