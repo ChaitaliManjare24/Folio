@@ -30,11 +30,8 @@
 .ab-skill-group:hover{border-color:var(--accent-landing)}
 .ab-skill-group h3{font-family:var(--mono-l);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-landing);margin-bottom:14px}
 .ab-skill-list{display:flex;flex-wrap:wrap;gap:8px}
-.ab-skill-list .ab-skill{font-family:var(--mono-l);font-size:12px;padding:5px 12px;border-radius:6px;font-weight:500;transition:transform .2s var(--ease)}
-.ab-skill-list .ab-skill:hover{transform:translateY(-1px)}
-.ab-skill[data-level="expert"]{background:var(--ink);color:var(--paper);font-weight:600}
-.ab-skill[data-level="proficient"]{background:rgba(49,40,255,.08);color:var(--accent-landing);border:1px solid rgba(49,40,255,.15)}
-.ab-skill[data-level="familiar"]{background:var(--paper-3);color:var(--muted);border:1px solid var(--line)}
+.ab-skill-list .ab-skill{font-family:var(--mono-l);font-size:12px;padding:6px 12px;background:var(--paper-3);color:var(--ink-2);border:1px solid var(--line);border-radius:6px;font-weight:500;transition:all .2s var(--ease)}
+.ab-skill-list .ab-skill:hover{border-color:var(--accent-landing);color:var(--accent-landing)}
 .ab-exp{border-left:2px solid var(--line);padding-left:24px;margin-bottom:28px;position:relative}
 .ab-exp::before{content:"";position:absolute;left:-5px;top:4px;width:8px;height:8px;border-radius:50%;background:var(--accent-landing)}
 .ab-exp-role{font-family:var(--sans-l);font-size:18px;font-weight:700;color:var(--ink)}

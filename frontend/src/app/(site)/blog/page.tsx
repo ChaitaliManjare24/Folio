@@ -51,13 +51,13 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
             className="font-[family-name:var(--font-mono)] text-[var(--text-xs)] uppercase tracking-widest mb-[var(--space-4)]"
             style={{ color: "var(--color-accent)" }}
           >
-            Blog
+            <span style={{ opacity: 0.5 }}>// Writing</span> &nbsp; Essays, guides &amp; field notes
           </p>
           <h1
             className="font-[family-name:var(--font-display)] text-[var(--text-2xl)] md:text-[var(--text-3xl)] font-semibold"
-            style={{ color: "var(--color-text)", fontSize: "clamp(2rem, 5vw, var(--text-3xl))" }}
+            style={{ color: "var(--color-text)", fontSize: "clamp(2rem, 5vw, var(--text-3xl))", letterSpacing: "-0.02em" }}
           >
-            Writing
+            From the <span style={{ color: "var(--color-accent)" }}>blog</span>
           </h1>
         </div>
 
