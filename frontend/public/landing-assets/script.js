@@ -86,18 +86,6 @@
     });
   });
 
-  /* ---------- portfolio tabs ---------- */
-  const tabs = $$('.tab');
-  if (tabs.length) {
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const id = tab.dataset.tab;
-        tabs.forEach(t => t.classList.toggle('active', t === tab));
-        $$('.tab-panel').forEach(p => { p.style.display = (p.id === `panel-${id}`) ? '' : 'none'; });
-      });
-    });
-  }
-
   /* ---------- live IST clock ---------- */
   const clock = $('#clock');
   if (clock) {

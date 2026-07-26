@@ -1,6 +1,8 @@
 import Script from "next/script";
 import { fetchSettings } from "@/lib/config";
+import PortfolioClient from "./PortfolioClient";
 import "../landing.css";
+import "./portfolio.css";
 
 export const revalidate = 60;
 
@@ -26,7 +28,6 @@ export default async function PortfolioPage() {
   const items: Any[] = pf.items || [];
   const webItems = items.filter((i) => i.category !== "apps");
   const appItems = items.filter((i) => i.category === "apps");
-  const tabs = pf.tabs || [{ id: "web", label: "Web Design" }, { id: "apps", label: "Apps" }];
 
   const brand = footer.brand || "Amit/build";
   const [brandA, brandB] = brand.split("/");
@@ -58,7 +59,17 @@ export default async function PortfolioPage() {
           <div className="header-cta">
             <a href="/#top" className="status-pill"><i></i> {lc.statusPill || "Building"}</a>
             <a href="/contact" className="btn btn-dark"><span>{nav.contact || "Contact"}</span>{arrow}</a>
+            <button className="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
           </div>
+        </div>
+        <div className="mobile-nav" id="mobileNav" aria-hidden="true">
+          <a href="/#principles">{nav.principles || "Principles"}</a>
+          <a href="/#process">{nav.process || "Process"}</a>
+          <a href="/#stack">{nav.stack || "Stack"}</a>
+          <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
+          <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
+          <a href="/#faq">{nav.faq || "FAQ"}</a>
+          <a href="/contact" className="btn btn-dark">{nav.contact || "Contact"}</a>
         </div>
       </header>
 
@@ -68,56 +79,11 @@ export default async function PortfolioPage() {
             <p className="kicker reveal"><span>[ {hero.kickerLabel || "Portfolio"} ]</span> {hero.kickerText || "Selected work"}</p>
             <h1 className="hero-title reveal" style={{ fontSize: "clamp(32px,5vw,56px)", maxWidth: "700px" }}>{hero.title ? hl(hero.title) : null}</h1>
             <p className="reveal" style={{ fontFamily: "var(--mono)", fontSize: "14px", color: "var(--muted)", maxWidth: "580px", marginTop: "20px", lineHeight: 1.7 }}>{hero.subtitle || ""}</p>
-            <div className="tabs reveal" style={{ marginTop: "48px" }}>
-              {tabs.map((t: Any, i: number) => (
-                <button key={t.id} className={`tab${i === 0 ? " active" : ""}`} data-tab={t.id}>{t.label} <span className="tab-count">({t.id === "apps" ? appItems.length : webItems.length})</span></button>
-              ))}
-            </div>
+          </div>
+          <div className="wrap">
+            <PortfolioClient webItems={webItems} appItems={appItems} />
           </div>
         </section>
-
-        {/* WEB GRID */}
-        <div className="tab-panel" id="panel-web">
-          <section className="services" style={{ paddingTop: "0", paddingBottom: "100px" }}>
-            <div className="wrap">
-              <div className="pf-grid">
-                {webItems.map((item, i) => (
-                  <a key={i} href={item.href} className="pf-link" target="_blank" rel="noopener noreferrer">
-                    <article className="pf-card reveal" style={{ "--i": i } as any}>
-                      <div className="pf-preview">
-                        {item.preview ? <iframe loading="lazy" src={item.preview} scrolling="no" tabIndex={-1} aria-hidden="true" /> : null}
-                        <div className="pf-shade" />
-                        <span className="pf-tag">{item.tag}</span>
-                      </div>
-                      <div className="pf-body"><span className="pf-num">{item.num}</span><h3>{item.title}</h3><p>{item.tagline}</p><span className="pf-view">View page →</span></div>
-                    </article>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
-
-        {/* APPS GRID */}
-        <div className="tab-panel" id="panel-apps" style={{ display: "none" }}>
-          <section className="services" style={{ paddingTop: "0", paddingBottom: "100px" }}>
-            <div className="wrap">
-              <div className="cards">
-                {appItems.map((item, i) => (
-                  <article key={i} className="card reveal" style={{ "--i": i } as any}>
-                    <span className="card-num">{item.num || `A${i + 1}`}</span>
-                    <h3>{item.title}</h3>
-                    <p>{item.tagline}</p>
-                    <ul className="card-tags">
-                      {item.href ? <li><a href={item.href} target="_blank" rel="noopener noreferrer">Live →</a></li> : null}
-                      {item.github ? <li><a href={item.github} target="_blank" rel="noopener noreferrer">Source →</a></li> : null}
-                    </ul>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
       </main>
 
       <footer className="site-footer">

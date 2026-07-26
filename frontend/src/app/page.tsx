@@ -90,7 +90,17 @@ export default async function HomePage() {
           <div className="header-cta">
             <a href="#top" className="status-pill"><i></i> {c.statusPill || "Building"}</a>
             <a href="/contact" className="btn btn-dark"><span>{nav.contact || "Contact"}</span>{arrow}</a>
+            <button className="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
           </div>
+        </div>
+        <div className="mobile-nav" id="mobileNav" aria-hidden="true">
+          <a href="#principles">{nav.principles || "Principles"}</a>
+          <a href="#process">{nav.process || "Process"}</a>
+          <a href="#stack">{nav.stack || "Stack"}</a>
+          <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
+          <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
+          <a href="#faq">{nav.faq || "FAQ"}</a>
+          <a href="/contact" className="btn btn-dark">{nav.contact || "Contact"}</a>
         </div>
       </header>
 

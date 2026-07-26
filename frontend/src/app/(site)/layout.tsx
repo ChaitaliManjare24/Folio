@@ -1,5 +1,12 @@
 import "@/app/globals.css";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
+      {children}
+    </>
+  );
 }

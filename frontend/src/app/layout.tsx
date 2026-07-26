@@ -120,9 +120,6 @@ export default async function RootLayout({
         {headSnippets.map((s) => (
           <div key={s.id} dangerouslySetInnerHTML={{ __html: s.code }} />
         ))}
-        <a href="#main" className="skip-link">
-          Skip to content
-        </a>
         {children}
         {bodySnippets.map((s) => (
           <div key={s.id} dangerouslySetInnerHTML={{ __html: s.code }} />
