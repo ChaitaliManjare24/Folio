@@ -12,15 +12,15 @@ A full-stack portfolio and blog platform with a built-in CMS, AI blog studio, an
 
 ## Demo
 
-https://github.com/user-attachments/assets/simpleaifolio-dashboard-overview
+**Video Overview:** [Watch the dashboard demo (.mp4, 64MB)](docs/screenshots/dashboard-overview.mp4)
 
 | Homepage | Blog | Dashboard |
 |----------|------|-----------|
-| ![Homepage](docs/screenshots/home.png) | ![Blog](docs/screenshots/blog.png) | ![Dashboard](docs/screenshots/dashboard.png) |
+| <img src="docs/screenshots/home.png" width="400"> | <img src="docs/screenshots/blog.png" width="400"> | <img src="docs/screenshots/dashboard.png" width="400"> |
 
 | Portfolio | Contact |
 |-----------|---------|
-| ![Portfolio](docs/screenshots/portfolio.png) | ![Contact](docs/screenshots/contact.png) |
+| <img src="docs/screenshots/portfolio.png" width="400"> | <img src="docs/screenshots/contact.png" width="400"> |
 
 ---
 
