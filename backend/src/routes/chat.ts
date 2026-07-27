@@ -107,6 +107,52 @@ const toolDefinitions = [
       parameters: { type: "object", properties: {} },
     },
   },
+  {
+    type: "function",
+    function: {
+      name: "get_about_details",
+      description: "Get detailed about info: skills (grouped by category with proficiency levels), work experience timeline (roles, periods, descriptions), and full bio.",
+      parameters: { type: "object", properties: {} },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "list_tags",
+      description: "List all blog tags with their post counts.",
+      parameters: { type: "object", properties: {} },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_landing_section",
+      description: "Get a specific section of the landing/homepage content (principles, process, stats, stack, hero, cta, trust).",
+      parameters: {
+        type: "object",
+        properties: {
+          section: { type: "string", enum: ["principles", "process", "stats", "stack", "hero", "cta", "trust"], description: "Which section to fetch" },
+        },
+        required: ["section"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_open_source_project",
+      description: "Get full details of a single open-source project by its slug.",
+      parameters: { type: "object", properties: { slug: { type: "string", description: "The project's URL slug" } }, required: ["slug"] },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_announcement",
+      description: "Get the current site announcement (banner text + link) if one is active.",
+      parameters: { type: "object", properties: {} },
+    },
+  },
 ];
 
 async function executeFunction(name: string, args: Record<string, unknown>): Promise<string> {
@@ -156,6 +202,46 @@ async function executeFunction(name: string, args: Record<string, unknown>): Pro
       const row = await prisma.siteSetting.findUnique({ where: { key: "landing_content" } });
       if (!row) return JSON.stringify([]);
       try { const d = JSON.parse(row.value); return JSON.stringify(d.faq?.items || []); } catch { return JSON.stringify([]); }
+    }
+    case "get_about_details": {
+      const [settingsRows, experience] = await Promise.all([
+        prisma.siteSetting.findMany({ where: { key: { in: ["bio_about_1", "bio_about_2", "bio_about_3", "skill_groups"] } } }),
+        prisma.experience.findMany({ orderBy: { order: "asc" } }),
+      ]);
+      const s: Record<string, string> = {};
+      for (const r of settingsRows) s[r.key] = r.value;
+      let skills: unknown[] = [];
+      try { skills = JSON.parse(s.skill_groups || "[]"); } catch { /* empty */ }
+      return JSON.stringify({
+        bio: [s.bio_about_1, s.bio_about_2, s.bio_about_3].filter(Boolean),
+        skills,
+        experience: experience.map((e) => ({ role: e.role, period: e.period, description: e.description })),
+      });
+    }
+    case "list_tags": {
+      const tags = await prisma.tag.findMany({ select: { name: true, slug: true, _count: { select: { posts: { where: { status: "PUBLISHED" } } } } }, orderBy: { name: "asc" } });
+      return JSON.stringify(tags.map((t) => ({ name: t.name, slug: t.slug, postCount: t._count.posts })));
+    }
+    case "get_landing_section": {
+      const section = String(args.section || "");
+      const row = await prisma.siteSetting.findUnique({ where: { key: "landing_content" } });
+      if (!row) return JSON.stringify({ error: "No landing content found" });
+      try {
+        const d = JSON.parse(row.value);
+        const data = d[section];
+        if (!data) return JSON.stringify({ error: `Section '${section}' not found. Available: ${Object.keys(d).join(", ")}` });
+        return JSON.stringify(data);
+      } catch { return JSON.stringify({ error: "Failed to parse landing content" }); }
+    }
+    case "get_open_source_project": {
+      const project = await prisma.openSourceProject.findUnique({ where: { slug: String(args.slug) }, select: { title: true, slug: true, tagline: true, description: true, githubUrl: true, homepageUrl: true, author: true, language: true, category: true, stars: true, forks: true, license: true, topics: true, featured: true } });
+      if (!project) return JSON.stringify({ error: "Project not found" });
+      return JSON.stringify(project);
+    }
+    case "get_announcement": {
+      const row = await prisma.siteSetting.findUnique({ where: { key: "announcement" } });
+      if (!row) return JSON.stringify({ enabled: false });
+      try { return JSON.stringify(JSON.parse(row.value)); } catch { return JSON.stringify({ enabled: false }); }
     }
     default:
       return JSON.stringify({ error: `Unknown function: ${name}` });
