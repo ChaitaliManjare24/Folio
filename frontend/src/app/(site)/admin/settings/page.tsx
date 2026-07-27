@@ -550,18 +550,6 @@ function SettingsContent() {
 
                 {activeSiteSubTab === "general" && (
                   <>
-                    <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
-                      <div className="mb-[var(--space-5)]">
-                        <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Appearance</p>
-                        <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
-                          Theme
-                        </h2>
-                        <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
-                          Locked to Forge Tech — the landing page design system (paper background, ink text, electric ultramarine accent, Archivo + JetBrains Mono fonts).
-                        </p>
-                      </div>
-                    </section>
-
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Site Wide</p>
