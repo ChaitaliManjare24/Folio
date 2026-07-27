@@ -12,7 +12,7 @@ A full-stack portfolio and blog platform with a built-in CMS, AI blog studio, an
 
 ## Demo
 
-**Video Overview:** [Watch the dashboard demo (.mp4, 64MB)](docs/screenshots/dashboard-overview.mp4)
+**Video Overview** — [Watch the platform demo](https://github.com/asharma02192/SimpleAIFolio/blob/master/docs/screenshots/dashboard-overview.mp4) (opens GitHub's built-in video player)
 
 | Homepage | Blog | Dashboard |
 |----------|------|-----------|
