@@ -452,29 +452,15 @@ function SettingsContent() {
                     <div className="mb-[var(--space-5)]">
                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Home Page</p>
                       <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
-                        Hero Section
+                        Landing Page Content
                       </h2>
                       <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
-                        Appears at the top of the home page with your intro text and key highlights.
+                        The homepage is now fully CMS-driven. Edit the hero, principles, process, stats, stack, FAQ, CTA, footer, and portfolio items.
                       </p>
                     </div>
-                    <div className="flex flex-col gap-[var(--space-5)]">
-                      <div>
-                        <label htmlFor="settings-bio-hero" className={labelClass} style={{ color: "var(--color-text-tertiary)" }}>Bio Text</label>
-                        <textarea id="settings-bio-hero" value={settings.bio_hero || ""} onChange={(e) => set("bio_hero", e.target.value)} rows={2} className="w-full px-[var(--space-3)] py-[var(--space-2)] text-[var(--text-sm)] outline-none focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors" style={inputStyle} />
-                      </div>
-                      <div>
-                        <label className={labelClass} style={{ color: "var(--color-text-tertiary)" }}>Stats</label>
-                        {(settings.hero_stats || []).map((stat, index) => (
-                          <div key={index} className="mb-[var(--space-2)] flex flex-col gap-[var(--space-2)] sm:flex-row sm:items-center">
-                            <input value={stat.value} onChange={(e) => setStat(index, "value", e.target.value)} placeholder="Value" className="flex-1 px-[var(--space-3)] py-[var(--space-2)] text-[var(--text-sm)] outline-none focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors" style={inputStyle} />
-                            <input value={stat.label} onChange={(e) => setStat(index, "label", e.target.value)} placeholder="Label" className="flex-1 px-[var(--space-3)] py-[var(--space-2)] text-[var(--text-sm)] outline-none focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors" style={inputStyle} />
-                            <button onClick={() => removeStat(index)} className="self-start px-1 font-[family-name:var(--font-mono)] text-[var(--text-xs)] transition-colors hover:opacity-80 sm:self-center" style={{ color: "var(--color-error)" }}>x</button>
-                          </div>
-                        ))}
-                        <button onClick={addStat} className="mt-[var(--space-1)] font-[family-name:var(--font-mono)] text-[var(--text-xs)] transition-colors hover:opacity-80" style={{ color: "var(--color-accent)" }}>+ Add stat</button>
-                      </div>
-                    </div>
+                    <a href="/admin/landing" className="inline-flex items-center gap-2 px-5 py-2.5 font-[family-name:var(--font-body)] text-[var(--text-sm)] font-medium transition-opacity hover:opacity-80" style={{ background: "var(--color-accent)", color: "var(--color-accent-on)", borderRadius: "var(--radius-md)" }}>
+                      Edit Landing Page →
+                    </a>
                   </section>
 
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
