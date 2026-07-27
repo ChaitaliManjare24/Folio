@@ -1,4 +1,6 @@
-﻿# SimpleAIFolio
+﻿<img src="docs/screenshots/home.png" width="100%">
+
+# SimpleAIFolio
 
 A full-stack portfolio and blog platform with a built-in CMS, AI blog studio, and an MCP server — so you can manage your entire site from any AI tool (Claude Code, ChatGPT, Cursor, Windsurf).
 
@@ -16,9 +18,9 @@ A full-stack portfolio and blog platform with a built-in CMS, AI blog studio, an
 
 https://github.com/user-attachments/assets/aca6f081-9c8f-4cef-be3d-dfcd41df68f0
 
-| Homepage | Blog | Dashboard |
-|----------|------|-----------|
-| <img src="docs/screenshots/home.png" width="400"> | <img src="docs/screenshots/blog.png" width="400"> | <img src="docs/screenshots/dashboard.png" width="400"> |
+| Blog | Dashboard |
+|------|-----------|
+| <img src="docs/screenshots/blog.png" width="400"> | <img src="docs/screenshots/dashboard.png" width="400"> |
 
 | Portfolio | Contact |
 |-----------|---------|
