@@ -550,57 +550,17 @@ function SettingsContent() {
 
                 {activeSiteSubTab === "general" && (
                   <>
-                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
-                     <div className="mb-[var(--space-5)]">
-                       <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Appearance</p>
-                       <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
-                         Theme
-                       </h2>
-                       <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
-                         Choose the visual theme for your website. Changes apply after saving.
-                       </p>
-                     </div>
-                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-[var(--space-4)]">
-                      {([
-                        { id: "light-minimal", name: "Light Minimal", desc: "Warm light background with indigo accents and Bricolage headings" },
-                        { id: "dark-modern", name: "Dark Modern", desc: "Dark charcoal with indigo accent, cream text, and Bricolage headings" },
-                        { id: "mono-editorial", name: "Mono Editorial", desc: "Pure white, true black text, Sora headings — sharp and print-like" },
-                      ] as const).map((t) => {
-                        const selected = (settings.theme || "light-minimal") === t.id;
-                        return (
-                          <button
-                            key={t.id}
-                            onClick={() => set("theme", t.id)}
-                            className="text-left rounded-[var(--radius-lg)] p-[var(--space-5)] transition-all duration-150"
-                            style={{
-                              background: selected ? "var(--color-accent-lightest)" : "var(--color-bg)",
-                              border: `2px solid ${selected ? "var(--color-accent)" : "var(--color-border)"}`,
-                              boxShadow: selected ? "0 0 0 1px var(--color-accent)" : "none",
-                            }}
-                          >
-                            <div className="flex items-center gap-[var(--space-3)] mb-[var(--space-2)]">
-                              <div
-                                className="w-5 h-5 rounded-full flex items-center justify-center text-[var(--text-xs)]"
-                                style={{
-                                  border: `2px solid ${selected ? "var(--color-accent)" : "var(--color-border-strong)"}`,
-                                  background: selected ? "var(--color-accent)" : "transparent",
-                                  color: selected ? "var(--color-accent-on)" : "transparent",
-                                }}
-                              >
-                                {selected ? "✓" : ""}
-                              </div>
-                              <span className="font-[family-name:var(--font-display)] text-[var(--text-sm)] font-bold" style={{ color: "var(--color-text)" }}>
-                                {t.name}
-                              </span>
-                            </div>
-                            <p className="font-[family-name:var(--font-body)] text-[var(--text-xs)] pl-[var(--space-8)]" style={{ color: "var(--color-text-tertiary)" }}>
-                              {t.desc}
-                            </p>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </section>
+                    <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
+                      <div className="mb-[var(--space-5)]">
+                        <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>Appearance</p>
+                        <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>
+                          Theme
+                        </h2>
+                        <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
+                          Locked to Forge Tech — the landing page design system (paper background, ink text, electric ultramarine accent, Archivo + JetBrains Mono fonts).
+                        </p>
+                      </div>
+                    </section>
 
                   <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
                     <div className="mb-[var(--space-5)]">
