@@ -8,7 +8,7 @@ A full-stack portfolio and blog platform with a built-in CMS, AI blog studio, an
 
 **AI Chatbot:** A built-in website chatbot uses LLM function calling (not RAG) with 13 tools to answer visitor questions about your blog posts, projects, skills, FAQ, and more — zero hardcoded data, all real-time from your database.
 
-**Live demo:** [bit2byte.app](https://bit2byte.app/)
+**Live demo:** [bit2byte.app](https://bit2byte.app/) | **Follow:** [X/Twitter](https://x.com/bit2byteapp) · [LinkedIn](https://www.linkedin.com/in/bit2byte/) · [Substack](https://substack.com/@bit2byteapp) · [GitHub](https://github.com/asharma02192)
 
 ---
 
