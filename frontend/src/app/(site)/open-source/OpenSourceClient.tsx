@@ -5,10 +5,13 @@ import Link from "next/link";
 import type { OpenSourceProject } from "@/types";
 import "./open-source.css";
 
+const PER_PAGE = 9;
+
 export default function OpenSourcePage({ projects }: { projects: OpenSourceProject[] }) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeLanguage, setActiveLanguage] = useState("All");
+  const [page, setPage] = useState(1);
 
   const categories = useMemo(() => {
     const set = new Set(projects.map((p) => p.category).filter(Boolean) as string[]);
@@ -35,6 +38,12 @@ export default function OpenSourcePage({ projects }: { projects: OpenSourceProje
       );
     });
   }, [projects, query, activeCategory, activeLanguage]);
+
+  // Reset to page 1 when filters change
+  useMemo(() => { setPage(1); }, [query, activeCategory, activeLanguage]);
+
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  const pageItems = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   return (
     <div className="os-section">
@@ -78,7 +87,7 @@ export default function OpenSourcePage({ projects }: { projects: OpenSourceProje
           <p className="os-empty">No projects match your filters.</p>
         ) : (
           <div className="os-grid">
-            {filtered.map((p) => (
+            {pageItems.map((p) => (
               <Link key={p.id} href={`/open-source/${p.slug}`} className="os-card-link">
                 <article className="os-card reveal">
                   <div className="os-card-body">
@@ -105,6 +114,17 @@ export default function OpenSourcePage({ projects }: { projects: OpenSourceProje
                 </article>
               </Link>
             ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 36 }}>
+            <button className="os-pill" disabled={page <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>← Prev</button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button key={p} className={`os-pill${p === page ? " active" : ""}`} onClick={() => setPage(p)}>{p}</button>
+            ))}
+            <button className="os-pill" disabled={page >= totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))}>Next →</button>
           </div>
         )}
       </div>
