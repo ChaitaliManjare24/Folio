@@ -2,6 +2,22 @@
 
 # SimpleAIFolio
 
+<p>
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express">
+  <br>
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma">
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+  <br>
+  <img src="https://img.shields.io/badge/MCP-6F42B1?style=for-the-badge&logo=modelcontextprotocol&logoColor=white" alt="MCP">
+  <img src="https://img.shields.io/badge/OpenAI_Compatible-412991?style=for-the-badge&logo=openai&logoColor=white" alt="OpenAI Compatible">
+  <img src="https://img.shields.io/badge/MIT-License-green?style=for-the-badge" alt="MIT License">
+</p>
+
 A full-stack portfolio and blog platform with a built-in CMS, AI blog studio, and an MCP server — so you can manage your entire site from any AI tool (Claude Code, ChatGPT, Cursor, Windsurf).
 
 **What makes it different:** Every feature in the admin panel is also accessible via MCP tools. You can create blog posts, manage open-source projects, check analytics, edit the landing page, and configure a chatbot — all through a chat interface in your favorite AI tool.
