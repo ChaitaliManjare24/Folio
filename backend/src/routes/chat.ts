@@ -261,7 +261,7 @@ router.post("/", async (req, res) => {
     const userMessages = Array.isArray(req.body?.messages) ? req.body.messages : [];
     if (userMessages.length === 0) { res.status(400).json({ error: "No messages provided" }); return; }
 
-    const defaultSystem = "You are a helpful assistant for a website. Use the available functions to look up information about the site's content — blog posts, categories, open-source projects, portfolio, FAQ, and site details. Never guess or fabricate information; always use functions to get real data. Be concise, friendly, and helpful. If a function returns no results, say so honestly.";
+    const defaultSystem = "You are a helpful assistant for a website. Use the available functions to look up information about the site's content — blog posts, categories, open-source projects, portfolio, FAQ, and site details. Never guess or fabricate information; always use functions to get real data. Be concise, friendly, and helpful. If a function returns no results, say so honestly. Do not use emojis in your responses. Format responses using markdown (headings, bold, lists, links) for readability.";
     const systemPrompt = config.systemPrompt?.trim() || defaultSystem;
 
     const messages: Array<Record<string, unknown>> = [

@@ -1,10 +1,22 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { marked } from "marked";
 
 interface Message { role: "user" | "assistant"; content: string }
 
 interface Config { enabled: boolean; suggestions: string[]; rateLimit: number }
+
+// Configure marked for chat — compact, no IDs on headers
+marked.setOptions({ breaks: true, gfm: true });
+
+function renderMarkdown(text: string): string {
+  try {
+    return marked.parse(text) as string;
+  } catch {
+    return text;
+  }
+}
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -133,10 +145,14 @@ export default function ChatWidget() {
                   background: m.role === "user" ? "#3128ff" : "#efebdf",
                   color: m.role === "user" ? "#fff" : "#131210",
                   fontFamily: '"Archivo", system-ui, sans-serif', fontSize: 14, lineHeight: 1.5,
-                  whiteSpace: "pre-wrap", wordBreak: "break-word",
+                  wordBreak: "break-word",
                 }}
               >
-                {m.content}
+                {m.role === "assistant" ? (
+                  <div className="chat-md" dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }} />
+                ) : (
+                  m.content
+                )}
               </div>
             ))}
             {loading && (
@@ -187,6 +203,23 @@ export default function ChatWidget() {
         @media (min-width: 681px) {
           .chat-panel { bottom: 20px !important; right: 20px !important; border-radius: 12px !important; height: 600px !important; }
         }
+        .chat-md h1,.chat-md h2,.chat-md h3,.chat-md h4{font-family:"Archivo",system-ui,sans-serif;font-weight:700;margin:10px 0 6px;line-height:1.25}
+        .chat-md h1{font-size:16px}.chat-md h2{font-size:15px}.chat-md h3{font-size:14px}.chat-md h4{font-size:13px}
+        .chat-md h1:first-child,.chat-md h2:first-child,.chat-md h3:first-child{margin-top:0}
+        .chat-md p{margin:6px 0}
+        .chat-md ul,.chat-md ol{margin:6px 0;padding-left:18px}
+        .chat-md li{margin:3px 0}
+        .chat-md a{color:#3128ff;text-decoration:underline;text-underline-offset:2px}
+        .chat-md strong{font-weight:700}
+        .chat-md em{font-style:italic}
+        .chat-md code{font-family:"JetBrains Mono",monospace;font-size:12px;background:rgba(49,40,255,.08);padding:1px 4px;border-radius:3px}
+        .chat-md pre{background:rgba(19,18,16,.06);padding:8px 10px;border-radius:6px;overflow-x:auto;margin:6px 0}
+        .chat-md pre code{background:none;padding:0}
+        .chat-md blockquote{border-left:2px solid #3128ff;padding-left:10px;margin:6px 0;color:#6f6c63}
+        .chat-md hr{border:none;border-top:1px solid rgba(19,18,16,.1);margin:8px 0}
+        .chat-md table{border-collapse:collapse;margin:6px 0;font-size:13px}
+        .chat-md th,.chat-md td{border:1px solid rgba(19,18,16,.1);padding:4px 8px;text-align:left}
+        .chat-md th{background:rgba(19,18,16,.04);font-weight:600}
       `}</style>
     </>
   );
