@@ -2,6 +2,7 @@ import { fetchSettings } from "@/lib/config";
 import PortfolioClient from "./PortfolioClient";
 import LandingHeader from "@/components/landing/LandingHeader";
 import LandingFooter from "@/components/landing/LandingFooter";
+import ChatWidget from "@/components/ChatWidget";
 import "../landing.css";
 import "./portfolio.css";
 
@@ -55,6 +56,7 @@ export default async function PortfolioPage() {
       </main>
 
       <LandingFooter settings={settings} />
+      <ChatWidget />
     </>
   );
 }

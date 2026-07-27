@@ -2,6 +2,7 @@ import { fetchSettings, type PublicSettings } from "@/lib/config";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import LandingHeader from "@/components/landing/LandingHeader";
 import LandingFooter from "@/components/landing/LandingFooter";
+import ChatWidget from "@/components/ChatWidget";
 
 export default async function PageWrapper({
   children,
@@ -20,6 +21,7 @@ export default async function PageWrapper({
         {children}
       </main>
       <LandingFooter settings={resolvedSettings} />
+      <ChatWidget />
     </>
   );
 }

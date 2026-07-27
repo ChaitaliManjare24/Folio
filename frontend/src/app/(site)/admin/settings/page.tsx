@@ -22,6 +22,11 @@ interface Settings {
   skill_groups?: { category: string; skills: { name: string; level: string }[] }[];
   announcement?: { text: string; link: string; enabled: boolean };
   theme?: string;
+  chatbot_enabled?: string;
+  chatbot_model?: string;
+  chatbot_rate_limit?: string;
+  chatbot_suggestions?: string;
+  chatbot_system_prompt?: string;
 }
 
 interface AiConfig {
@@ -80,6 +85,7 @@ const sections = [
   { id: "home", label: "Home Page" },
   { id: "about", label: "About Page" },
   { id: "site", label: "Site Wide" },
+  { id: "chatbot", label: "Chatbot" },
 ] as const;
 
 const siteSubTabs = [
@@ -1112,9 +1118,59 @@ function SettingsContent() {
                   </>
                 )}
                 </>
+                )}
+
+              {activeSection === "chatbot" && (
+                <>
+                  <section className="rounded-[var(--radius-lg)] p-[var(--space-6)]" style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}>
+                    <div className="mb-[var(--space-5)]">
+                      <p className="font-[family-name:var(--font-mono)] text-[0.625rem] uppercase tracking-[0.2em] mb-[var(--space-1)]" style={{ color: "var(--color-accent)" }}>AI Chatbot</p>
+                      <h2 className="font-[family-name:var(--font-display)] text-[var(--text-lg)] font-bold" style={{ color: "var(--color-text)" }}>Chatbot Settings</h2>
+                      <p className="mt-[var(--space-1)] font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-tertiary)" }}>
+                        Configure the website chatbot. Uses the AI Writer's API key and endpoint (locked below). Only the model is editable.
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-[var(--space-5)]">
+                      <div className="flex items-center gap-[var(--space-3)]">
+                        <input type="checkbox" id="chatbot-enabled" checked={settings.chatbot_enabled === "true"} onChange={(e) => set("chatbot_enabled", e.target.checked ? "true" : "false")} />
+                        <label htmlFor="chatbot-enabled" className="font-[family-name:var(--font-body)] text-[var(--text-sm)]" style={{ color: "var(--color-text-secondary)" }}>Enable chatbot on the website</label>
+                      </div>
+                      <div>
+                        <label className={labelClass} style={{ color: "var(--color-text-tertiary)" }}>Model (editable)</label>
+                        <input value={settings.chatbot_model || ""} onChange={(e) => set("chatbot_model", e.target.value)} placeholder="Defaults to AI Writer model if empty" className="w-full px-[var(--space-3)] py-[var(--space-2)] text-[var(--text-sm)] outline-none focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors" style={inputStyle} />
+                      </div>
+                      <div>
+                        <label className={labelClass} style={{ color: "var(--color-text-tertiary)" }}>Rate Limit (messages per hour per visitor)</label>
+                        <input type="number" value={settings.chatbot_rate_limit || "25"} onChange={(e) => set("chatbot_rate_limit", e.target.value)} className="w-24 px-[var(--space-3)] py-[var(--space-2)] text-[var(--text-sm)] outline-none focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors" style={inputStyle} />
+                      </div>
+                      <div>
+                        <label className={labelClass} style={{ color: "var(--color-text-tertiary)" }}>Quick Suggestions (one per line)</label>
+                        <textarea
+                          value={(() => {
+                            try { return JSON.parse(settings.chatbot_suggestions || "[]").join("\n"); } catch { return settings.chatbot_suggestions || ""; }
+                          })()}
+                          onChange={(e) => set("chatbot_suggestions", JSON.stringify(e.target.value.split("\n").map((s) => s.trim()).filter(Boolean)))}
+                          rows={4}
+                          placeholder="One suggestion per line"
+                          className="w-full px-[var(--space-3)] py-[var(--space-2)] text-[var(--text-sm)] outline-none focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors"
+                          style={inputStyle}
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass} style={{ color: "var(--color-text-tertiary)" }}>Custom System Prompt (optional — leave empty for default)</label>
+                        <textarea value={settings.chatbot_system_prompt || ""} onChange={(e) => set("chatbot_system_prompt", e.target.value)} rows={3} className="w-full px-[var(--space-3)] py-[var(--space-2)] text-[var(--text-sm)] outline-none focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/30 transition-colors" style={inputStyle} />
+                      </div>
+                      <div style={{ padding: "12px 16px", background: "var(--color-bg-muted)", borderRadius: "var(--radius-md)", border: "1px solid var(--color-border)" }}>
+                        <p className="font-[family-name:var(--font-mono)] text-[var(--text-xs)]" style={{ color: "var(--color-text-tertiary)" }}>
+                          🔒 API Key, Endpoint URL — inherited from AI Writer config (locked). The chatbot uses these automatically.
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                </>
               )}
 
-              {saveError ? (
+               {saveError ? (
                 <div className="rounded-[var(--radius-md)] px-[var(--space-4)] py-[var(--space-3)] text-[var(--text-sm)]" style={{ background: "oklch(95% 0.05 25)", border: "1px solid oklch(90% 0.05 25)", color: "oklch(40% 0.1 25)" }}>
                   {saveError}
                 </div>

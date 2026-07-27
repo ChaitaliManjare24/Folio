@@ -2,6 +2,7 @@ import Link from "next/link";
 import { fetchAllPublishedPosts, fetchSettings } from "@/lib/config";
 import LandingHeader from "@/components/landing/LandingHeader";
 import LandingFooter from "@/components/landing/LandingFooter";
+import ChatWidget from "@/components/ChatWidget";
 import "./landing.css";
 
 export const revalidate = 60;
@@ -237,7 +238,7 @@ export default async function HomePage() {
       </main>
 
       <LandingFooter settings={settings} />
-
+      <ChatWidget />
     </>
   );
 }
