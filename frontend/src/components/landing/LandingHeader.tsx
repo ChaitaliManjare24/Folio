@@ -32,7 +32,7 @@ export default function LandingHeader({ settings }: { settings: PublicSettings }
             <a href="/#stack">{nav.stack || "Stack"}</a>
             <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
             <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
-            <a href="/#faq">{nav.faq || "FAQ"}</a>
+            {nav.faq && <a href="/#faq">{nav.faq}</a>}
             <a href="/about" className="nav-highlight">About</a>
           </nav>
           <div className="header-cta">
@@ -47,7 +47,7 @@ export default function LandingHeader({ settings }: { settings: PublicSettings }
           <a href="/#stack">{nav.stack || "Stack"}</a>
           <a href="/portfolio" className="nav-highlight">{nav.projects || "Projects"}</a>
           <a href="/blog" className="nav-highlight">{nav.blog || "Blog"}</a>
-          <a href="/#faq">{nav.faq || "FAQ"}</a>
+          {nav.faq && <a href="/#faq">{nav.faq}</a>}
           <a href="/about">About</a>
           <a href="/contact" className="btn btn-dark">{nav.contact || "Contact"}</a>
         </div>

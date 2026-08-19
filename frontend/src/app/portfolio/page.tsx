@@ -9,6 +9,11 @@ import "./portfolio.css";
 export const revalidate = 60;
 
 type Any = Record<string, any>;
+type Category = {
+  id: string;
+  label: string;
+  order: number;
+};
 
 function hl(text: string) {
   return text.split(/(\*\*[^*]+\*\*)/g).map((p, i) =>
@@ -28,8 +33,23 @@ export default async function PortfolioPage() {
   const pf = (settings.portfolioItems || {}) as Any;
   const hero = pf.hero || {};
   const items: Any[] = pf.items || [];
-  const webItems = items.filter((i) => i.category !== "apps");
-  const appItems = items.filter((i) => i.category === "apps");
+
+  // Extract categories dynamically from portfolio items
+  const categories: Category[] = items.reduce((acc: Category[], item: Any, index: number) => {
+    const categoryId = item.category || "other";
+    const existing = acc.find(c => c.id === categoryId);
+    if (!existing) {
+      acc.push({
+        id: categoryId,
+        label: categoryId.charAt(0).toUpperCase() + categoryId.slice(1).replace(/-/g, ' '),
+        order: index
+      });
+    }
+    return acc;
+  }, []);
+
+  // Sort categories by order
+  const sortedCategories: Category[] = [...categories].sort((a, b) => (a.order || 0) - (b.order || 0));
 
   const brand = footer.brand || "Amit/build";
   const [brandA, brandB] = brand.split("/");
@@ -50,7 +70,7 @@ export default async function PortfolioPage() {
             <p className="reveal" style={{ fontFamily: "var(--mono)", fontSize: "14px", color: "var(--muted)", maxWidth: "580px", marginTop: "20px", lineHeight: 1.7 }}>{hero.subtitle || ""}</p>
           </div>
           <div className="wrap">
-            <PortfolioClient webItems={webItems} appItems={appItems} />
+            <PortfolioClient items={items} categories={sortedCategories} />
           </div>
         </section>
       </main>

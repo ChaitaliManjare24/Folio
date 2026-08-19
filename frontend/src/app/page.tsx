@@ -200,23 +200,25 @@ export default async function HomePage() {
         )}
 
         {/* FAQ */}
-        <section className="faq" id="faq">
-          <div className="wrap faq-layout">
-            <div className="faq-side">
-              <p className="section-label reveal"><span>// {faq.label || "06"}</span> {faq.labelText || ""}</p>
-              <h2 className="section-title reveal">{faq.title ? hl(faq.title) : null}</h2>
-              <p className="faq-intro reveal">{faq.intro || ""}</p>
+        {faq.items && faq.items.length > 0 && (
+          <section className="faq" id="faq">
+            <div className="wrap faq-layout">
+              <div className="faq-side">
+                <p className="section-label reveal"><span>// {faq.label || "06"}</span> {faq.labelText || ""}</p>
+                <h2 className="section-title reveal">{faq.title ? hl(faq.title) : null}</h2>
+                <p className="faq-intro reveal">{faq.intro || ""}</p>
+              </div>
+              <div className="faq-list">
+                {(faq.items || []).map((item: Any, i: number) => (
+                  <details key={i} className="faq-item reveal">
+                    <summary>{item.q}{plus}</summary>
+                    <p>{item.a}</p>
+                  </details>
+                ))}
+              </div>
             </div>
-            <div className="faq-list">
-              {(faq.items || []).map((item: Any, i: number) => (
-                <details key={i} className="faq-item reveal">
-                  <summary>{item.q}{plus}</summary>
-                  <p>{item.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* CTA */}
         <section className="cta" id="contact">
