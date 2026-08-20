@@ -242,6 +242,45 @@ export function createAuthRouter({ prismaClient = prisma }: { prismaClient?: Aut
     }
   });
 
+  // POST /api/auth/reset-password — temporary password reset (use with care)
+  router.post("/reset-password", async (req, res) => {
+    try {
+      const { email, newPassword } = req.body;
+
+      if (!email || !newPassword) {
+        res.status(400).json({ error: "Email and new password are required" });
+        return;
+      }
+
+      if (typeof newPassword !== "string" || newPassword.length < 8) {
+        res.status(400).json({ error: "New password must be at least 8 characters" });
+        return;
+      }
+
+      const user = await prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+
+      const hashed = await bcrypt.hash(newPassword, 12);
+      await prisma.user.update({
+        where: { email },
+        data: { password: hashed },
+      });
+
+      logInfo("Password reset successfully", { ...getRequestLogMeta(req), email });
+      res.json({ success: true, message: "Password reset successful" });
+    } catch (error) {
+      logError("Password reset failed", {
+        ...getRequestLogMeta(req),
+        email: req.body?.email,
+        error: error instanceof Error ? error.message : String(error),
+      });
+      res.status(500).json({ error: "Failed to reset password" });
+    }
+  });
+
   // PUT /api/auth/change-password — change admin password
   router.put("/change-password", authMiddleware, async (req: AuthRequest, res) => {
     try {
