@@ -2,7 +2,7 @@ FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 ENV NODE_ENV=development
-RUN npm ci
+RUN npm ci && npm install --no-save @types/express @types/cors @types/morgan @types/jsonwebtoken @types/bcryptjs @types/multer @types/pg @types/uuid
 
 FROM node:20-alpine AS builder
 WORKDIR /app
